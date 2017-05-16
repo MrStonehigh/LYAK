@@ -6,8 +6,8 @@ clc,clear,close all;
 rho=1.18;                            %Air Mass Density (kg/m3)
 c=345;                               %Speed of sound(m/s)
 pREF=20e-6;                          %Tryk-reference (pa)
-Ug=2.83;                             %Påtrykt Spænding (V)
-f=40:1000;                          %Frekvens (Hz)
+Ug=2.75;                             %Påtrykt Spænding (V)
+f=10:1000;                          %Frekvens (Hz)
 s=j*2*pi*f;                          %Laplace operator
 %f1=c/(2*pi*r);                      %Grænse for massestyret system
                                      %(Herover Usikkert)
@@ -15,8 +15,8 @@ s=j*2*pi*f;                          %Laplace operator
 Re=7.2;                                %DC-Modstand (ohm)
 f3=48;
 Le=Re/(2*pi*f3);                       %Svingspolens Selvinduktion (H)
-Mms=14.7;                           %Masse af Bevægelige system (kg)
-Cms=0.821;                          %Eftergivelighed af styr (mm/N)
+Mms=14.7%e-3;                              %Masse af Bevægelige system (kg)
+Cms=0.821%e-3;                             %Eftergivelighed af styr (mm/N)
 fs=45;                                 %Resonansfrekvens (Hz)
 Qms=3.246;                             %Mekanisk Godhed
 Qes=0.452;                             %Elektrisk Godhed
@@ -29,7 +29,7 @@ Xmax=4.6e-3;                           %Maksimal Lineær Bevægelse (m)
 
 
 %% Rum- & Måleparametre
-r=1;                                %Distance til Mikrofon
+r=1;                                %Distance til Mikrofon (m)
 Fa=(Bl*Ug)/(Re*SD);                 %Akustisk kraft
 Cab=Vas/(rho*c^2);                  % Akustik eftergivelighed af luftvoluminet
 Rae=(Bl)^2/(Re*SD^2);               % Electrical DC resistance.
@@ -37,12 +37,12 @@ Mas=Mms/(SD^2);                     % Driver moving mass (kg).
 Cas=Cms*SD^2;                       % Driver compliance (m/N)
 Ras=Rms/SD^2;                       % Driver mechanical loss (Ns/m).
 %RAL=10e4;                          % Cabinet losses (Ns/m5).
-RP=0.05;                            % Port radius (m).
+RP=0.0025;                            % Port radius (m).
 SP=pi*RP^2;                         % Areal af Port (m2)
-LX=0.200;                           %Port længde (m)
+LX=0.15;                               %Port længde (m)
 MMP=(rho*SP)*(LX+1.5*sqrt(SP/pi));
 %MAP=MMP/SP^2;                       % Akustisk masse af luften i porten (kg) 
-MAP=(rho/SP)*(LX+1.5*sqrt(SP/pi));
+MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));
 qF=Fa./(Rae+s*Mas+1./(s*Cas)+Ras+1./(s*Cab+1./(s*MAP)));
 qP=-qF.*(1./(s*Cab))./(1./(s*Cab)+s*MAP);
 pT=rho*s.*(qF+qP)/(2*pi*r); 
