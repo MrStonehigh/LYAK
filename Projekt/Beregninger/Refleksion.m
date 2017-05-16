@@ -1,5 +1,5 @@
 %% Refleksion
-
+clc,clear,close all;
 %% Parametre FW168 MIDWOOFER
 Re=7.2;                                %DC-Modstand (ohm)
 f3=48;
@@ -16,18 +16,36 @@ SD=119e-2;                             %Membranens effektive Areal (m^2)
 Xmax=4.6e-3;                           %Maksimal Lineær Bevægelse (m)
 %S=87.3;                               %Følsomhed (dB)
 
+
 %% Fysiske Parametre
+
+Ug=2.75;                             %Påtrykt spænding (V)
 rho=1.18;                            %Air Mass Density (kg/m3)
 f=1:10000;                           %Frequency (Hz)
+pRef=20e-6;                          %Referencetryk (pa)
 rd=1;                                %Distance to Microphone (m)
-v=(Bl*Ug)./(2*pi*f*Mms*Re);           %Volumenhastighed
-q=SD*v;
-D=1;
-
+c=343;                               %Lydens hastighed (m/s)
+D=1;                                 %Spredning (approximeret)
 k=(2*pi*f)/c;                        %Bølgetallet
-h=0.1;                               %Højtalerens højde ift gulv (m)
-rR=sqrt(rd^2+4*h^2);                 %Reflekteret lydafstand (m)
-%% Beregning 
-p=j.*((rho.*f.*q)/(2*rd)).*(1+(rd/rR).*D*exp(-j*k*(rR-rd)));
 
-semilogx(f,mag2db(p))
+
+%% Portens Parametre
+
+r=1;                                  %Måleafstand (m)
+h=.20;                                %Højtalerens højde ift gulv (m)
+rp=0.025;                             %Port Radius (m)
+SP=pi*rp^2;                           %Portens effektive Areal (m^2)
+pRMS=((rho*SP*(2*pi*f).^2)/(4*pi*r)); %*xmax/sqrt(2);
+Lp=.2,                                %Længden på porten (m);
+Map=(rho/SP)*(Lp+1.5*sqrt(SP/pi));    %Massen ved porten
+
+%% Beregninger 
+v=(Bl)./(2*pi*f.*Map);          %Volumenhastighed
+q=SP*v;
+rR=sqrt(rd^2+4*h^2);                 %Reflekteret lydafstand (m)
+
+fR=c/(2*(rR-rd));                    %Portens Resonansfrekvens (Hz)
+%p=j.*((rho.*f.*q)/(2*rd)).*...
+%    (1+(rd/rR).*D*exp(-j*k*(rR-rd)));%Trykbidrag fra overfladerefleksion
+p=j*((rho*f)/r).*q;
+semilogx(f,(p))
