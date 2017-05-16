@@ -1,7 +1,18 @@
 clear;
 
 closeTable = readtable('close');
-X = closeTable(1:end, 1);
-Y = closeTable(1:end, 2);
+closeFreq = table2array(closeTable(1:end, 1));
+closeGain = table2array(closeTable(1:end, 2));
 
-plot(X, Y)
+farTable = readtable('far');
+farFreq = table2array(farTable(1:end, 1));
+farGain = table2array(farTable(1:end, 2));
+
+figure(1)
+semilogx(closeFreq, closeGain)
+hold on
+semilogx(farFreq, farGain)
+grid on
+axis([10 23E3 -100 -30])
+legend('Tæt på', 'Langt fra')
+title('Lukket kabinet')
