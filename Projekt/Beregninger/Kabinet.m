@@ -38,8 +38,7 @@ Cas=Cms*(SD^2);                         %Driver compliance (m/N)
 Ras=Rms/SD^2;                           %Driver mechanical loss (Ns/m).
 RP=0.025;                               %Port radius (m).
 SP=pi*RP^2;                             %Areal af Port (m2)
-%LX=0.15;                                %Port længde (m)
-LX=0.07;
+LX=0.15;                                %Port længde (m)
 MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
 
 %fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
@@ -68,20 +67,15 @@ legend('Samlet','Enhed','Port')
   
 Cmb=Vas/(rho*c^2*SD^2);
 Cres=Cms*Cmb/(Cms+Cmb);
-FC=1/(2*pi*sqrt(Mas*(Cas*Cab)/(Cas+Cab)));         %Enheds-resonans
+FC=1/(2*pi*sqrt(Mas*(Cas*Cab)/(Cas+Cab)));         %Grænsefrekvens
 FP=1/(2*pi*sqrt(MAP*Cab));                         %Port-resonans
 QTS=sqrt(Mms/Cres)/(Bl^2/Re+Rms);                  %Godhed af svingende system
 
 text(4,95, ['UG=' num2str((Ug)) ' V']) 
 text(4,91, ['Vas=' num2str(1000*Vas) 'liter'])
 text(4,87, ['fc=' num2str(round(FC)) 'Hz'])
-text(4,83, ['fp=' num2str(round(FP)) 'Hz'])
-text(4,79, ['QTS=' num2str(round(100*QTS)/100)]) 
-%text(11,89, ['QP=' num2str(round(100*QP)/100)]) 
+text(4,83, ['fp=' num2str(round(FP)) 'Hz']) 
 text(4,75, ['Måleafstand=' num2str(round(r)) ' m']) 
-text(4,71, ['rP=' num2str(RP) ' m'])
-text(4,67, ['lP=' num2str(LX) ' m'])
+text(4,71, ['Rp=' num2str(RP*100) ' cm'])
+text(4,67, ['Lp=' num2str(LX*100) ' cm'])
 
-%% Yderligere Impedansparametre
-
-QP=Rae*sqrt(Cab/MAP);
