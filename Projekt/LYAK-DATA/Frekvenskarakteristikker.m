@@ -123,10 +123,14 @@ figure(1)
 semilogx(frequency, closedClose)
 hold on
 semilogx(frequency, closedFar)
+hold on
+semilogx(frequency, closedFar + 30)
 grid on
 axis tight
-legend('Ved membran', 'Afstand 1 meter','Location', 'southeast')
+legend('Ved membran', 'Afstand 1 meter', 'Forskudt +30 dB', 'Location', 'southeast')
 title('Lukket kabinet')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
 
 %% Plot - Basrefleks på forsiden (forskellige længder)
 figure(2)
