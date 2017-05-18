@@ -119,12 +119,14 @@ bottomShortFar = table2array(bottomShortFarTable(1:end, 2));
 
 
 %% Plot - Lukket kabinet
+diff = sum(closedClose - closedFar)/length(closedClose);
+
 figure(1)
 semilogx(frequency, closedClose)
 hold on
 semilogx(frequency, closedFar)
 hold on
-semilogx(frequency, closedFar + 30)
+semilogx(frequency, closedFar + 25)
 grid on
 axis tight
 legend('Ved membran', 'Afstand 1 meter', 'Forskudt +30 dB', 'Location', 'southeast')
@@ -132,7 +134,7 @@ title('Lukket kabinet')
 xlabel('Frekvens [Hz]')
 ylabel('Gain [dBV]')
 
-%% Plot - Basrefleks på forsiden (forskellige længder)
+%% Plot - Basrefleks på forsiden (forskellige længder) målt på membran
 figure(2)
 semilogx(frequency, frontLongClose)
 hold on
@@ -144,7 +146,9 @@ semilogx(frequency, closedClose)
 grid on
 axis tight
 legend('Lang refleks', 'Medium refleks', 'Kort refleks','Lukket kabinet', 'Location', 'southeast')
-title('Membranens karakteristik ved forskellige længder basrefleks')
+%title('Membranens karakteristik ved forskellige længder basrefleks')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
 
 %% Plot - Basrefleks på forsiden (forskellige længder)
 figure(3)
