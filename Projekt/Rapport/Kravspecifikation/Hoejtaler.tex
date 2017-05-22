@@ -20,13 +20,17 @@ Med værdierne fra tabel YY udregnes den elektriske impedans for højtaleren i l
 Z_E(s)=R_E+sL_E+\frac{Bl^2}{\omega_s M_{MS}} \frac{ \omega_s s}{ s^2 + \frac{1}{Q_{MS}} \omega_s s + \omega_s^2} \end{equation} \begin{equation} \ \qquad  = 
 7.2\Omega + s \cdot 1mH + \frac{(8.2 Tm)^2}{287.8Hz \cdot 14.7gm} \frac{ 287.8Hz \cdot s}{ s^2 + \frac{1}{3.246} 287.8Hz \cdot s + (287.8Hz)^2}  \end{equation}
 
-Impedansen vil være størst ved højtalerensresonansfrekvens $f_s$, som beregnes i ligning \ref{eq:fs}
+Impedansen vil være størst ved højtalerensresonansfrekvens $f_s$, som beregnes i ligning \ref{eq:fs}. Dette toppunkts maksimumværdi er givet ved ligning \ref{eq:Zmax} 
 
 \begin{equation}\label{eq:fs}
 f_s=\frac{1}{2 \pi \sqrt{M_{MS} C_{MS}}}=45.813Hz
 \end{equation}
 
-På figur \ref{fig:ZE_graf} \fixme{Find ud af at lave det i matlab!!!! LS} ses plottet af ligning \ref{eq:eq1} med værdierne for højtaleren. Kurveforløbet stemmer overens med det beregnede toppunkt $f_s$ og minimumsværdien $R_E$. Kurveforløbet stemmer ligeledes overens med det opgivne i databladet \cite{FW168}.
+\begin{equation}\label{eq:Zmax}
+Z_{max}=R_E+\frac{Bl^2}{R{MS}}=58.781\Omega
+\end{equation}
+
+På figur \ref{fig:ZE_graf} \fixme{Find ud af at lave det i matlab!!!! LS} ses plottet af ligning \ref{eq:eq1} med værdierne for højtaleren. Kurveforløbet stemmer overens med det beregnede toppunkt $f_s$ og minimumsværdien $R_E$. Kurveforløbet stemmer ligeledes overens med det opgivne i databladet \citep{FW168}.
 
 \begin{figure}[H]
 	\centering
