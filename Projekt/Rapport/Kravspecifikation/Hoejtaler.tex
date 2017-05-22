@@ -3,16 +3,37 @@
 \section{Teori}
 Højtaleren der benyttes til projektet er en 6.5" mellemtone elektrodynamisk højtaler af mærket FW168\cite{FW168} fra firmaet Fountek \cite{Fountek}. 
 
-På figur \ref{fig:kompletmodel} ses den komplette model for højtalerens elektriske, mekaniske og akustiske system. Komponentværdierne og forklaringen af disse, kan ses i tabel YY.
+På figur \ref{fig:kompletmodel} ses den komplette model for højtalerens elektriske, mekaniske og akustiske system.\citep{Elektroakustik} Komponentværdierne og forklaringen af disse, kan ses i tabel YY.\fixme{Opret tabel med Thiele-Small værdier LS}
 
 \begin{figure}[H]
 	\centering
-%	\includegraphics[width=\textwidth]{Pics/kompletmodel.PNG}
+	\includegraphics[width=\textwidth]{Pics/kompletmodel.PNG}
 	\label{fig:kompletmodel}
-	\caption{Komplet model fro højtalerens elektrisk, mekaniske- og akustiske system. \cite{Elektroakustik}}
+	\caption{Komplet model fro højtalerens elektrisk, mekaniske- og akustiske system. } 
 \end{figure}
 
-Omregner man modellen til en komplet elektrisk model, kan man udregne den elektrsiek impedans $Z_E$ for modellen.
+Omregner man modellen til en komplet elektrisk model, kan man udregne den elektrsiek impedans $Z_E$ for modellen. Denne impedans har et toppunkt ved højtalerens resonansfrekvens, og en minimumsværdi ved svingspolens $R_E$-værdi.
+
+Med værdierne fra tabel YY udregnes den elektriske impedans for højtaleren i ligning \ref{eq:eq1}
+
+\begin{equation}\label{eq:eq1}
+Z_E(s)=R_E+sL_E+\frac{Bl^2}{\omega_s M_{MS}} \frac{ \omega_s s}{ s^2 + \frac{1}{Q_{MS}} \omega_s s + \omega_s^2} \end{equation} \begin{equation} \ \qquad  = 
+7.2\Omega + s \cdot 1mH + \frac{(8.2 Tm)^2}{287.8Hz \cdot 14.7gm} \frac{ 287.8Hz \cdot s}{ s^2 + \frac{1}{3.246} 287.8Hz \cdot s + (287.8Hz)^2}  \end{equation}
+
+Impedansen vil være størst ved højtalerensresonansfrekvens $f_s$, som beregnes i ligning \ref{eq:fs}
+
+\begin{equation}\label{eq:fs}
+f_s=\frac{1}{2 \pi \sqrt{M_{MS} C_{MS}}}=45.813Hz
+\end{equation}
+
+På figur \ref{fig:ZE_graf} \fixme{Find ud af at lave det i matlab!!!! LS} ses plottet af ligning \ref{eq:eq1} med værdierne for højtaleren. Kurveforløbet stemmer overens med det beregnede toppunkt $f_s$ og minimumsværdien $R_E$. Kurveforløbet stemmer ligeledes overens med det opgivne i databladet \cite{FW168}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Pics/ZE_graf.PNG}
+	\label{fig:ZE_graf}
+	\caption{Den elektriske impedans $Z_E$ som funktion af frekvensen} 
+\end{figure}
 
 \section{Simulering}
 
