@@ -40,18 +40,21 @@ Ws=1/(sqrt(Mms*Cms));
 
 Ze=Re+s*Le+((Bl^2)/(Ws*Mms))*((s*Ws)/((s.^2)+(1/Qms)*s*Ws+(Ws^2)));
 
-Zmax=Re+(Bl^2)/Rms
+Zmax=Re+(Bl^2)/Rms;
 %semilogx(w,20*log10(abs(Ze))
 
 %% Plot af Ze
 
-%n=[1:1:20000];
-n=1:10;
-n.^2
+n=[0:1:20000];
+%n=1:10;
+
 Ze_f1=Re+n*Le;
 Bl1=((Bl^2)/(Ws*Mms));
-Ze=Ze_f1+Bl1*((Ws*(2*pi*n))/(((2*pi*n).^2)+((1/Qms)*Ws*(2*pi*n) )+(Ws^2)));
+Ze=Ze_f1+Bl1*((Ws*(2*pi*n))/(((2*pi)*(n.^2))+((1/Qms)*Ws*(2*pi*n) )+(Ws^2)));
+
+x=-5*n.^2+50*n+100;
 figure()
 semilogx(n,Ze,'b')
 hold on
 semilogx(n,Ze_f1,'r')
+
