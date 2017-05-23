@@ -1,1 +1,19 @@
 \chapter{Simulering}
+
+\section{Bidrag fra Basreflex-porten}
+
+For at kunne sammenligne teori og praksis, kan højtaler-dataen fra tabel \ref{tab:TS} benyttes til at udformere et simuleret frekvensrespons, ud fra de forskellige portlængder på basrefleksen. 
+
+Ved at beregne volumenhastigheden for den elektriske impedans, kan man opdele bidraget fra fronten af højtaleren, samt for porten, for til sidst at lave det samlede tryk til en ønsket afstand. 
+
+\textbf{Volumenhastighed Front:}\\
+
+{\Large\(qF=\)}{\huge \(\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{(s*C_{AB}+\frac{1}{s*M_{AP}}}}\) }
+
+\textbf{Volumenhastighed Port:}\\
+
+{\Large\(qP=-qF*\)}{\huge \(\frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}}\) }
+
+\fxnote{s 61 Tores bog}
+\section{Bidrag fra reflektion}
+
