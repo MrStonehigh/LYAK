@@ -1,10 +1,11 @@
 %% Refleksion
-clc,clear,close all;
-
+%clc,clear,close all;
+h=0;
+for i=1:4
 %% Ændring af Måleparametre
 
 rd=1;                                %Distance to Microphone (m)
-h=.2;                                %Højtalerens højde ift gulv (m)
+h=h+.2;                                %Højtalerens højde ift gulv (m)
 
 %% Parametre FW168 MIDWOOFER
 Re=7.2;                              %DC-Modstand (ohm)
@@ -20,7 +21,7 @@ Rms=sqrt(Mms/Cms)/Qms;               %Mekanisk tabsmodstand (ohm)
 
 Ug=2.75;                             %Påtrykt spænding (V)
 rho=1.18;                            %Air Mass Density (kg/m3)
-f=1:10000;                           %Frequency (Hz)
+f=10:10000;                           %Frequency (Hz)
 pRef=20e-6;                          %Referencetryk (pa)
 c=345;                               %Lydens hastighed (m/s)
 s=j*2*pi*f;                          %Laplace operator
@@ -32,7 +33,7 @@ k=2*pi*f/c;                          %Bølgetallet
 a=sqrt(SD/pi);                       %Enhedsradius (m) 
 ka=(2*pi*f*a)./c;                    %Spredningsfaktor 
 rR=sqrt((rd^2)+4*(h^2));             %Reflekteret lydafstand (m) 
-           
+fR=c/(2*(rR-rd));                    %Første Minimum (Hz)
 v=abs(((Bl/Mms)*s)./...
 ((s.^2)+(((Bl)^2)/(Mms*Re)+Rms/Mms)...
     *s+1/(Mms*Cms))*Ug/Re);          %Membranens hastighed (m/s)
@@ -52,22 +53,33 @@ pR=j*((rho*f.*q)/(2*rR)).*exp(-j*k*rR);         %Reflekteret bidrag (pa)
 p=j*((rho*f.*q)/(2*rd)).*(1+(rd/rR)*(D)...
     .*exp(-j*k*(rR-rd)));                       %Samlet Lydtryk (pa)
 
-LD=20*log10(abs(pD)/pRef);                      %Direkte (dB)
-LR=20*log10(abs(pR)/pRef);                      %Reflekteret (dB) 
-L=20*log10(abs(p)/pRef);                        %Samlet (dB)
+LD(i,:)=20*log10(abs(pD)/pRef);                      %Direkte (dB)
+LR(i,:)=20*log10(abs(pR)/pRef);                      %Reflekteret (dB) 
+L(i,:)=20*log10(abs(p)/pRef);                        %Samlet (dB)
 
+end
 
+%{
 figure,
 semilogx(L); title('Lydtryk fra højtalerenhed')
 hold on, grid on
 semilogx(LD);
 semilogx(LR);
-axis([10 f(end) min(L) max(L)])
+axis([10 f(end) min(L(1,:)) max(L(1,:))])
 legend('Samlet','Direkte','Reflekteret');
 xlabel('Frekvens (Hz)');
 ylabel('SPL (dB)');
+%}
 
 figure, 
-semilogx(L-LD); title('Refleksionsbidrag')
+semilogx(L(1,:)-LD(1,:),'LineWidth',3); title('Refleksionsbidrag')
+hold on
+semilogx(L(2,:)-LD(2,:),'LineWidth',2);
+semilogx(L(3,:)-LD(3,:),'LineWidth',1.5);
+semilogx(L(4,:)-LD(4,:));
+axis([10 2.3e3 -20 10])
 xlabel('Frekvens (Hz)');
 ylabel('SPL (dB)');
+legend('h=.2m','h=.4m','h=.6m','h=.8m')
+
+Lsolo=L(1,:)-LD(1,:);
