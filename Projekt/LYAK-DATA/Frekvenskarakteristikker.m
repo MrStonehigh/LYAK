@@ -162,8 +162,23 @@ axis tight
 legend('Lang refleks', 'Medium refleks', 'Kort refleks', 'Location', 'southeast')
 title('Basrefleksens karakteristik ved forskellige længder basrefleks')
 
-%% Plot - Basrefleks placeret forskellige steder
+%% Plot - Basrefleks placeret forskellige steder (close)
 figure(4)
+semilogx(frequency, frontLongTube)
+hold on
+semilogx(frequency, sideLongTube)
+hold on
+semilogx(frequency, bottomLongTube)
+grid on
+axis tight
+legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Location', 'southeast')
+%title('Basrefleksen placeret forskellige steder (refleks)')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
+
+
+%% Plot - Basrefleks placeret forskellige steder (far)
+figure(5)
 semilogx(frequency, frontLongFar)
 hold on
 semilogx(frequency, sideLongFar)
@@ -174,4 +189,6 @@ semilogx(frequency, closedFar)
 grid on
 axis tight
 legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Ingen refleks', 'Location', 'southeast')
-title('Basrefleksen placeret forskellige steder')
+%title('Basrefleksen placeret forskellige steder (lytteafstand)')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
