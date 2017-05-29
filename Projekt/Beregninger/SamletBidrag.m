@@ -25,4 +25,4 @@ legend('Bas-refleks+Refleksionsbidrag v. h=0.2m',...
 xlabel('Frekvens (Hz)');
 ylabel('dB SPL');
 
-save Lfinal1;
+save('SimuleringData', 'f', 'Lfinal1');
