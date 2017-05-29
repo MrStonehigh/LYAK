@@ -1,0 +1,27 @@
+\chapter{Frekvensrespons}
+
+Som figur \ref{fig:BR_a_Model} viser, kan det lukkede kabinet og basreflekskabinettet modelleres med næsten samme akustiske model, kun med portens fjederbelastning $M_{AP}$ som forskel. 
+
+$F_A=\frac{S_D U_G}{R_E Bl}$ er en kraftgenerator hvor spændingskilden $U_G = 2.75V$ da $\frac{U_G ^2}{R_E}=1W $ som er en ofte anvendt reference effekt ved målinger på højtalere.
+Lydtrykket findes vha. volumestrømmene $q_F$ fra højtalerens front og $q_P$ fra porten.
+
+For det lukkede kabinet opstilles ligningen for $q_F$ i ligning \ref{lig:qf_lukket}
+
+\begin{equation}\label{lig:qf_lukket}
+q_F = \frac{F_A}{Z} = \frac{ \frac{S_D U_G}{R_E Bl} }{ R_{AE} + sM_{AS} + \frac{1}{ sC_{AS} } + R_{AS} + \frac{1}{sC_{AB} }}
+\end{equation}
+
+For basrefleks $ q_F $ medregnes den parallel-indskudte spole i ligning \ref{lig:qf_refleks}, samt portens volumestrøm $ q_P $ som ses i ligning \ref{lig:qp}
+
+\begin{equation}\label{lig:qf_refleks}
+q_F=\frac{F_A}{Z}=\frac{\frac{S_D U_G}{R_E Bl}}{ R_{AE}+sM_{AS}+ \frac{1}{sC_{AS} } + R_{AS} + \frac{1}{sC_{AB} + \frac{1}{sM_{AP}}}  }
+\end{equation}
+\begin{equation}\label{lig:qp}
+q_P=-\frac{ \frac{1}{sC_{AB}} }{ \frac{1}{sC_{AB} +sM_{AP}  }}\cdot q_F
+\end{equation}
+
+Ligningerne \ref{lig:qf_lukket}-\ref{lig:qp} vil blive brugt til simulering af højtaler og kabinet i kapitel \ref{chap:sim}. For at beregne lydtrykket i SPL dB bruges ligning \ref{lig:SPLdB}
+\begin{equation}\label{lig:SPLdB}
+L=20 log( \frac{ \frac{\rho f}{r} (q_F+q_P) }{p_{ref}} )
+\end{equation}
+hvor afstanden mellem højtaler og mikrofon er $r=1m$ og $p_{ref}=20 \mu Pa $

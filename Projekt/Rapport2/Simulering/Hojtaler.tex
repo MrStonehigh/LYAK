@@ -5,15 +5,19 @@ For at kunne sammenligne teori og praksis, kan højtaler-dataen fra tabel \ref{t
 Ved at beregne volumenhastigheden for den elektriske impedans, ud fra teorien behandlet i afsnit \ref{chapt:Teori}, kan man opdele bidraget fra fronten af højtaleren og for porten, for til sidst at lave det samlede lydtryk til en ønsket afstand \textit{r}. 
 
 
-\subsection{Volumenhastighed Front:}
-\label{sec:sim_calc}
+%\subsection{Volumenhastighed Front:}
+%\label{sec:sim_calc}
 
-Ud fra impedansen af det samlede system, kan volumenhastigheden for højtalerenheden i kabinettet beregnes. Dette er hastigheden af det volumen af luft som skubbes foran højtaleren. 
+%Ud fra impedansen af det samlede system, kan volumenhastigheden for højtalerenheden i kabinettet beregnes. Dette er hastigheden af det volumen af luft som skubbes foran højtaleren. 
 
-\begin{equation}
-	qF=\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{s*C_{AB}+\frac{1}{s*M_{AP}}} }
-\end{equation}
+%<<<<<<< HEAD
+%{\large\(qF=\)}{\Large \(\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{(s*C_{AB}+\frac{1}{s*M_{AP}}}}\) }
+%=======
+%\begin{equation}
+%	qF=\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{s*C_{AB}+\frac{1}{s*M_{AP}}} }
+%\end{equation}
 
+%>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
 %Hvor\\
@@ -33,24 +37,39 @@ Ud fra impedansen af det samlede system, kan volumenhastigheden for højtalerenh
 %\(L_P=\frac{1.4*100*10^3}{1.18*(2*\pi*44)^2*16.5*10-3}-1.46\sqrt{\frac{0.0020}{\pi}}=15cm\)
 
 
-\subsection{Volumenhastighed Port:}
+%\subsection{Volumenhastighed Port:}
 
-Tilsvarende beregnes bidraget fra porten ud fra følgende formel \ref{lign:qP}:
-\begin{equation}\label{lign:qP}
-	qP=-qF* \frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}} 	
-\end{equation}
+%<<<<<<< HEAD
+%Tilsvarende beregnes bidraget fra porten ud fra følgende formel:
+
+%{\large\(qP=-qF*\)}{\Large \(\frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}}\) }
+%\cite{Elektroakustik}
+%=======
+%Tilsvarende beregnes bidraget fra porten ud fra følgende formel \ref{lign:qP}:
+%\begin{equation}\label{lign:qP}
+%	qP=-qF* \frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}} 	
+%\end{equation}
+
+%>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
+%\subsection{Beregning af samlet lydtryk:}
 
-\subsection{Beregning af samlet lydtryk:}
+%<<<<<<< HEAD
+%For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel:
 
-For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel \ref{lign:L}:
+%\(L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL\)
 
-\begin{equation}\label{lign:L}
-	L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL
-\end{equation}
+%hvor referencetrykket $pRef=10  \mu Pa$
+%=======
+%For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel \ref{lign:L}:
 
-hvor referencetrykket $pRef=20  \mu Pa$
+%\begin{equation}\label{lign:L}
+%	L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL
+%\end{equation}
+
+%hvor referencetrykket $pRef=20  \mu Pa$
+%>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
 \subsection{Resultater}
@@ -87,7 +106,7 @@ Det er ligeledes værd at notere, at det generelle gain som er opnået, er laver
 \subsubsection{Langt port - 14 cm}
 
 Ved brug af en portlængde på 14 cm, fås frekvensresponset som ses på figur \ref{fig:sim_langt}. \\
-Denne længde er den teoretisk optimale, som det blev beregnet ovenfor i sektion \ref{sec:sim_calc}, og resonerer nu i 44 Hz, så port og højtaler er korrekt afstemt. 
+Denne længde er den teoretisk optimale, som det blev beregnet ovenfor i sektion \ref{sec:theori_calc}, og resonerer nu i 44 Hz, så port og højtaler er korrekt afstemt. 
 Der opretholdes dermed en højere gengivelse af de lavere frekvenser end det var muligt før og teorien stammer dermed overens med simuleringen. 
 
 \begin{figure}[h!]
