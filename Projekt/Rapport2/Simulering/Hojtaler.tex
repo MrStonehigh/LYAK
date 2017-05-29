@@ -1,8 +1,8 @@
-\section{Højtaler}
+\section{Højtaleren i Basrefleks-kabinet}
 
-For at kunne sammenligne teori og praksis, kan højtaler-dataen fra tabel \ref{tab:TS} benyttes til at udformere et simuleret frekvensrespons, ud fra de forskellige portlængder på basrefleksen. 
+For at kunne sammenligne teori og praksis, kan højtaler-dataen fra tabel \ref{tab:TS} benyttes til at udformere et simuleret frekvensrespons, for de forskellige portlængder på basrefleksen.
 
-Ved at beregne volumenhastigheden for den elektriske impedans, kan man opdele bidraget fra fronten af højtaleren, samt for porten, for til sidst at lave det samlede tryk til en ønsket afstand. 
+Ved at beregne volumenhastigheden for den elektriske impedans, ud fra teorien behandlet i afsnit \ref{chapt:Teori}, kan man opdele bidraget fra fronten af højtaleren og for porten, for til sidst at lave det samlede lydtryk til en ønsket afstand \textit{r}. 
 
 
 \subsection{Volumenhastighed Front:}
@@ -10,18 +10,19 @@ Ved at beregne volumenhastigheden for den elektriske impedans, kan man opdele bi
 
 Ud fra impedansen af det samlede system, kan volumenhastigheden for højtalerenheden i kabinettet beregnes. Dette er hastigheden af det volumen af luft som skubbes foran højtaleren. 
 
-{\Large\(qF=\)}{\huge \(\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{(s*C_{AB}+\frac{1}{s*M_{AP}}}}\) }
+{\large\(qF=\)}{\Large \(\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{(s*C_{AB}+\frac{1}{s*M_{AP}}}}\) }
 
-I denne beregning, indgår også \textit{massen af luften i porten} ($M_{AP})$, som beror sig på radius af porten og længden af porten:\\
+Hvor\\
 
-\(M_{AP}=\frac{(\rho)}{S_P}*(L_P+1.46*\sqrt{\frac{S_P}{\pi}}\))
+\(M_{AP}=\frac{(\rho)}{S_P}*(L_P+1.46*\sqrt{\frac{S_P}{\pi}}\)  \hspace{3.1 cm} Luftmassen i den Akustiske Port\\
 
-Da kabinettet i projektet allerede var konstrueret med en enkelt port, er radius af porten fastsat fra start.
+Det ses her, at $M_{AP}$ er afhængig af længden på porten $L_P$. For at opnå en korrekt afstemning af porten ift. højtalerenhedens resonansfrekvens, beregnes denne portlængde som følger:
 
 \(r_P=0.025 m\)		\hspace{6.2cm} Portens Radius\\
 \(S_P=\pi*r_P^2=pi*0.025^2=0.0020 m^2\)		\hspace{2cm} Portens overfladeareal\\
+\(L_P=\frac{\gamma*P_0}{\rho*(2*\pi*f_p)^2*V_{B}}-1.46\sqrt{\frac{S_P}{\pi}}\)			\hspace{3cm} Længden på porten\\
 
-\(L_P=\frac{\gamma*P_0}{\rho*(2*\pi*f_p)^2*V_{B}}-1.46\sqrt{\frac{S_P}{\pi}}\)			\hspace{3cm} Hvor $\gamma \approx 1.4$ \& $P_0=100*10^3)$\\
+$\gamma \approx 1.4$ \& $P_0=100*10^3)$\\
 
 Dermed får vi den optimale portlængde:\\
 
@@ -30,79 +31,115 @@ Dermed får vi den optimale portlængde:\\
 
 \subsection{Volumenhastighed Port:}
 
-Ovenpå at beregne volumenhastigheden for højtalerenheden, beregnes bidraget fra porten ud fra følgende formel:
+Tilsvarende beregnes bidraget fra porten ud fra følgende formel:
 
-{\Large\(qP=-qF*\)}{\huge \(\frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}}\) }
-\fxnote{s 61 Tores bog}
+{\large\(qP=-qF*\)}{\Large \(\frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}}\) }
+\cite{Elektroakustik}
 
 
 \subsection{Beregning af samlet lydtryk:}
 
-For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r}, benyttes følgende formel:
+For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel:
 
 \(L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL\)
 
-\fixme{Start mere generelt. Mere teori om lydm før vi angriber enheden. Mere teori om impedans-tilpasningen - AB}
-Højtaleren der benyttes til projektet er en 6.5" mellemtone elektrodynamisk højtaler af mærket FW168\cite{FW168} fra firmaet Fountek \cite{Fountek}. 
+hvor referencetrykket $pRef=10  \mu Pa$
 
-På figur \ref{fig:kompletmodel} ses den komplette model for højtalerens elektriske, mekaniske og akustiske system.\citep{Elektroakustik} Komponentværdierne og forklaringen af disse, kan ses i tabel \ref{tab:TS}.
 
-\begin{figure}[H]
+\subsection{Resultater}
+
+Ved beregningen i Matlab, kan der simuleres et plot for frekvenskarakteristikken af bidraget fra højtalerenheden, porten og det samlede bidrag. \\
+For at eftervise at det 15cm lange rør er den optimale længde for basreflexen i projektets kabinet, er der ligeledes lavet simuleringer med de to andre test-størrelser som var fysisk til rådighed: 7cm og 3.5cm.
+
+\subsubsection{Kort port - 3.5 cm}
+
+Ved brug af en portlængde på 3.5 cm, fås frekvensresponset som ses på figur \ref{fig:sim_kort}. \\
+Det fremgår af figuren at portens resonansfrekvens fp er helt oppe på 71 Hz, hvilket er over 2/3 højere end højtalerennhedens resonans. Dermed er porten ikke ordentligt afstemt, og de 24dB/oktav's fald under fp koster betydeligt på de lavere frekvenser. 
+
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{Pics/kompletmodel.PNG}
-	\label{fig:kompletmodel}
-	\caption{Komplet model fro højtalerens elektrisk, mekaniske- og akustiske system. } 
+	\includegraphics[width=.8\textwidth]{Pics/sim_kort}
+	\caption{Simuleret frekvensrespons ved $L_P$=3.5cm } 
+	\label{fig:sim_kort}
 \end{figure}
 
-\begin{table}
+\subsubsection{Mellemlangt port - 7 cm}
+
+Ved brug af en portlængde på 7 cm, fås frekvensresponset som ses på figur \ref{fig:sim_medium}. \\
+Det ses nu, at portens resonansfrekvens er rykket længere ned og nu resonerer ved 58 Hz. Dette er væsentligt tættere på at være afstemt med højtalerenhedens opgivne 45 Hz resonans, men er endnu ikke nede og give et korrekt bidrag for at løfte de lavere frekvenser. 
+
+Det er ligeledes værd at notere, at det generelle gain som er opnået, er lavere for den mellemlange port end for den korte port.  
+
+\begin{figure}[h!]
 	\centering
-	\begin{tabular}[C]{|c|c|c|}
-		
-		
-		\hline	
-		\textbf{Thiele-Small parameter} & \textbf{Symbol} & \textbf{Værdi for FW168} \\\hline
-		Svingspolens DC modstand & $R_E$ & $7.2\Omega$ \\\hline
-		Svingspolens selvinduktion & $L_E$ & $1mH$  \\\hline
-		Elektrisk godhed & $Q_{ES}$ & 0.452 \\\hline
-		Masse af bevægeligt system & $M_{MS}$ & $14.7g$  \\\hline
-		Eftergivelighed af styr & $C_{MS}$ & $0.821mm/N$  \\\hline
-		Mekanisk godhed & $Q_{MS}$ & 3.246  \\\hline
-		Mekanisk tabsmodstnd & $R_{MS}$ & \( \frac{1}{Q_{MS}}\sqrt{\frac{M_{MS}}{C_{MS}}}=1.304Ns/m \)  \\\hline
-		Resonansfrekvens & $f_s$ & \( \frac{1}{2\pi\sqrt{M_{MS} C_{MS}}}=45.813Hz \) \\\hline
-		
-		
-		Ækvivalent volumen & $ V_{AS} $ & $16.5L=0.017m^3$ \\\hline
-		Kraftfaktor & $Bl$ & $8.2Tm$ \\\hline
-		Membranens effektive areal & $S_D$ & $119cm^2$ \\\hline
-		Maksimal lineær bevægelse & $X_{MAX}$ & $4.6mm\pm$ \\\hline
-		
-	\end{tabular}
-	\label{tab:TS}
-\end{table}
+	\includegraphics[width=.8\textwidth]{Pics/sim_medium}
+	\caption{Simuleret frekvensrespons ved $L_P$=7cm } 
+	\label{fig:sim_medium}
+\end{figure}
 
-Omregner man modellen til en komplet elektrisk model, kan man udregne den elektriske impedans $Z_E$ for modellen. Denne impedans har et toppunkt ved højtalerens resonansfrekvens, og en minimumsværdi ved svingspolens $R_E$-værdi. \fixme{Men hvorfor er det vigtigt? Teorien bag! - AB}
+\subsubsection{Langt port - 15 cm}
 
-Med værdierne fra tabel \ref{tab:TS}, som er opgivet i højtalerens datablad\cite{FW168}, udregnes den elektriske impedans for højtaleren i ligning \ref{eq:eq1}
+Ved brug af en portlængde på 15 cm, fås frekvensresponset som ses på figur \ref{fig:sim_langt}. \\
+Denne længde er den teoretisk optimale, som det blev beregnet ovenfor i sektion \ref{sec:sim_calc}, og resonerer nu i 44 Hz, så port og højtaler er korrekt afstemt. 
+Der opretholdes dermed en højere gengivelse af de lavere frekvenser end det var muligt før og teorien stammer dermed overens med simuleringen. 
 
-\begin{equation}\label{eq:eq1}
-	Z_E(s)=R_E+sL_E+\frac{Bl^2}{\omega_s M_{MS}} \frac{ \omega_s s}{ s^2 + \frac{1}{Q_{MS}} \omega_s s + \omega_s^2} \end{equation} \begin{equation} \ \qquad  = 
-	7.2\Omega + s \cdot 1mH + \frac{(8.2 Tm)^2}{287.8Hz \cdot 14.7gm} \frac{ 287.8Hz \cdot s}{ s^2 + \frac{1}{3.246} 287.8Hz \cdot s + (287.8Hz)^2}  \end{equation}
-
-Impedansen vil være størst ved højtalerensresonansfrekvens $f_s$, som beregnes i ligning \ref{eq:fs}. Dette toppunkts maksimumværdi er givet ved ligning \ref{eq:Zmax} 
-
-\begin{equation}\label{eq:fs}
-	f_s=\frac{1}{2 \pi \sqrt{M_{MS} C_{MS}}}=45.813Hz
-\end{equation}
-
-\begin{equation}\label{eq:Zmax}
-	Z_{max}=R_E+\frac{Bl^2}{R{MS}}=58.781\Omega
-\end{equation}
-
-På figur \ref{fig:ZE_graf} \fixme{Find ud af at lave det i matlab!!!! LS} ses plottet af ligning \ref{eq:eq1} med værdierne for højtaleren. Kurveforløbet stemmer overens med det beregnede toppunkt $f_s$ og minimumsværdien $R_E$. Kurveforløbet stemmer ligeledes overens med det opgivne i databladet \citep{FW168}.
-
-\begin{figure}[H]
+\begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{Pics/ZE_graf.PNG}
-	\label{fig:ZE_graf}
-	\caption{Den elektriske impedans $Z_E$ som funktion af frekvensen} 
+	\includegraphics[width=.8\textwidth]{Pics/sim_lang}
+	\caption{Simuleret frekvensrespons ved $L_P$=15cm } 
+	\label{fig:sim_langt}
+\end{figure}
+
+
+\section{Bidrag fra reflektion}
+\label{sec:reflection}
+Foruden at skabe den bedst mulige gengivelse af de laveste frekvenser muligt vha. et afstemt basreflex-kabinet, fokuserer dette projekt på at forsøge at skabe et yderligere bidrag i bassen ved hjælp af et refleksionsbidrag fra nærliggende overflader. 
+
+Teorien beror sig på et fokus for refleksion ved en højtaler placeret i en vis højde fra gulvet. Her tages der dog ikke forbehold for kabinet-typen, betydende at positionen af basrefleks-porten heller ikke tages i betragtning. 
+Dette er dog et fokuspunkt for målingen, hvor simuleringen alene anvender den teori som er afbilledet i bogen (figur \ref{fig:reflect}
+\cite{Elektroakustik}
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.7\textwidth]{Pics/reflect}
+	\caption{Afbilding af teorien bag reflekteret lyd (Elektro-akustik,TAS, fig 1.20) } 
+	\label{fig:reflect}
+\end{figure}
+
+I jagten på et positivt bidrag i de lave frekvenser, vil man dog kunne forvente en destuktiv interferens, når højtaleren har en afstand til den reflekterede overflade på en halv bølgelængde. Herefter, vil frekvensresponset være temmeligt irregulært, før disse forstyrrelser dør ud i takt med at direktiviteten bliver mere betydende ved høje frekvenser. Dette trade-off skal man kunne leve med, for at refleksionsbidraget vil give mening.\\
+
+Denne frekvens \textbf{$f_R$}, også beskrevet som det første minimum, beregnes ved:\\
+
+\(f_R=\frac{c}{2(r_R-r_D)}\)\\
+\(r_R=\sqrt{r_D^2+4h^2})\) \hspace{2cm}Den reflekterede længde\\
+
+Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refleksionsbidrag} at frekvensen for det første minimum falder længere og længere ned. Så ud fra den simple betragtning af denne figur, kan det konkluderes at det må give det højeste stabile bidrag, op imod de højeste frekvenser, ved at sætte højtaleren så tæt på den reflektive overflade som muligt.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Pics/refleksionsbidrag}
+	\caption{Refleksionsbidrag fra nærmeste hårde, reflekterende overflade til forskellige højder for højtaleren } 
+	\label{fig:refleksionsbidrag}
+\end{figure}
+
+
+
+
+\section{Samlet Frekvensrespons}
+
+Ved at kombinere bas-reflex kabinettets frekvensrespons, med det lavfrekvente gain for refleksionen ved nærtliggende overflader, opnås et frekvensrespons som kan ses i figur \ref{fig:sim_samletrespons}.
+
+Af figuren fremgår det, at der er skabt et stabilt gain omkring 6dB i de lavere frekvenser under højtalerens resonansfrekvens, som bringer tidligere uhørbare frekvenser op i et lydtryk, hvor de rent faktisk kan opfattes af det menneskelige ører. Derudover, er de frekvenser som tidligere lå lige på grænsen af denne hørbarhed, løftet til et niveau hvor det burde være væsentligt lettere at høre.
+
+Ulempen er desværre netop den destuktive interferens som skabes fra reflektionen, som ses på den blå kurve, tidligere omtalt i afsnit \ref{sec:reflection}.\\
+Dette må dermed være et trade-off, imellem forstærkningen i de lave frekvenser og irregulariteten i de højere frekvenser. 
+
+Det kan ydermere betragtes, at kurven aftager med 24dB/oktav under højtalerens resonansfrekvens, netop som teorien beskrev.\cite{Elektroakustik}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Pics/sim_samletrespons}
+	\caption{Frekvensrespons for Basreflex-kabinettet med vs uden refleksionsbidraget} 
+	\label{fig:sim_samletrespons}
 \end{figure}

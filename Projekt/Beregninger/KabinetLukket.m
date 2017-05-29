@@ -43,9 +43,6 @@ SP=pi*RP^2;                             %Areal af Port (m2)
 %fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
 %LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)*Vas)-1.46*sqrt(SP/pi); %Beregnet længde af porten
 
-%MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
-
-
 %% Beregning af Volumenhastighed & Lydtryk
 
 qF=Fa./(Rae+s*Mas+1./(s*Cas)+Ras+1./(s*Cab));             %Volumenhastighed Front
