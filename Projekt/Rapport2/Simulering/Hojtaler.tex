@@ -10,7 +10,14 @@ Ved at beregne volumenhastigheden for den elektriske impedans, ud fra teorien be
 
 %Ud fra impedansen af det samlede system, kan volumenhastigheden for højtalerenheden i kabinettet beregnes. Dette er hastigheden af det volumen af luft som skubbes foran højtaleren. 
 
+<<<<<<< HEAD
 %{\large\(qF=\)}{\Large \(\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{(s*C_{AB}+\frac{1}{s*M_{AP}}}}\) }
+=======
+\begin{equation}
+	qF=\frac{F_A}{R_{AE}+s*M_{AS}+\frac{1}{s*C_{AS}}+Ras+\frac{1}{s*C_{AB}+\frac{1}{s*M_{AP}}} }
+\end{equation}
+
+>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
 %Hvor\\
@@ -32,19 +39,37 @@ Ved at beregne volumenhastigheden for den elektriske impedans, ud fra teorien be
 
 %\subsection{Volumenhastighed Port:}
 
+<<<<<<< HEAD
 %Tilsvarende beregnes bidraget fra porten ud fra følgende formel:
 
 %{\large\(qP=-qF*\)}{\Large \(\frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}}\) }
 %\cite{Elektroakustik}
+=======
+Tilsvarende beregnes bidraget fra porten ud fra følgende formel \ref{lign:qP}:
+\begin{equation}\label{lign:qP}
+	qP=-qF* \frac{\frac{1}{s*C_{AB}}}{\frac{1}{s*C_{AB}}+s*M_{AP}} 	
+\end{equation}
+
+>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
 %\subsection{Beregning af samlet lydtryk:}
 
+<<<<<<< HEAD
 %For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel:
 
 %\(L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL\)
 
 %hvor referencetrykket $pRef=10  \mu Pa$
+=======
+For at omregne de to volumenhastigheder til et lydtryk i afstanden \textit{r} med enheden dB SPL, benyttes følgende formel \ref{lign:L}:
+
+\begin{equation}\label{lign:L}
+	L=20*log_{10}(\frac{\frac{\rho*f}{r}*(qF+qP)}{pRef}) dB SPL
+\end{equation}
+
+hvor referencetrykket $pRef=20  \mu Pa$
+>>>>>>> 1ddbb399d9df3a1dd1363b7c180a1e0b12ec412c
 
 
 \subsection{Resultater}
@@ -59,7 +84,7 @@ Det fremgår af figuren at portens resonansfrekvens fp er helt oppe på 71 Hz, h
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.8\textwidth]{Pics/sim_kort}
+	\includegraphics[width=.75\textwidth]{Pics/sim_kort}
 	\caption{Simuleret frekvensrespons ved $L_P$=3.5cm } 
 	\label{fig:sim_kort}
 \end{figure}
@@ -73,7 +98,7 @@ Det er ligeledes værd at notere, at det generelle gain som er opnået, er laver
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.8\textwidth]{Pics/sim_medium}
+	\includegraphics[width=.75\textwidth]{Pics/sim_medium}
 	\caption{Simuleret frekvensrespons ved $L_P$=7cm } 
 	\label{fig:sim_medium}
 \end{figure}
@@ -86,7 +111,7 @@ Der opretholdes dermed en højere gengivelse af de lavere frekvenser end det var
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.8\textwidth]{Pics/sim_lang}
+	\includegraphics[width=.75\textwidth]{Pics/sim_lang}
 	\caption{Simuleret frekvensrespons ved $L_P$=14cm } 
 	\label{fig:sim_langt}
 \end{figure}
@@ -104,17 +129,23 @@ Dette er dog et fokuspunkt for målingen, hvor simuleringen alene anvender den t
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.7\textwidth]{Pics/reflect}
+	\includegraphics[width=.4\textwidth]{Pics/reflect}
 	\caption{Afbilding af teorien bag reflekteret lyd \cite{Elektroakustik} } 
 	\label{fig:reflect}
 \end{figure}
 
-I jagten på et positivt bidrag i de lave frekvenser, vil man dog kunne forvente en destuktiv interferens, når højtaleren har en afstand til den reflekterede overflade på en halv bølgelængde. Herefter, vil frekvensresponset være temmeligt irregulært, før disse forstyrrelser dør ud i takt med at direktiviteten bliver mere betydende ved høje frekvenser. Dette trade-off skal man kunne leve med, for at refleksionsbidraget vil give mening.\\
+I jagten på et positivt bidrag i de lave frekvenser, vil man dog kunne forvente en destuktiv interferens, når højtaleren har en afstand til den reflekterede overflade på en halv bølgelængde. Herefter, vil frekvensresponset være temmeligt irregulært, før disse forstyrrelser dør ud i takt med at direktiviteten bliver mere betydende ved høje frekvenser. Dette trade-off skal man kunne leve med, for at refleksionsbidraget vil give mening som en tilstræbelig faktor.\\
 
 Denne frekvens \textbf{$f_R$}, også beskrevet som det første minimum, beregnes ved:\\
+\begin{equation}\label{lign:fR}
+	f_R=\frac{c}{2(r_R-r_D)}
+\end{equation}
 
-\(f_R=\frac{c}{2(r_R-r_D)}\)\\
-\(r_R=\sqrt{r_D^2+4h^2})\) \hspace{2cm}Den reflekterede længde\\
+hvor $r_R$ er den reflekterede længde, givet ved:
+\begin{equation}
+	r_R=\sqrt{r_D^2+4h^2}
+\end{equation}
+
 
 Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refleksionsbidrag} at frekvensen for det første minimum falder længere og længere ned. Så ud fra den simple betragtning af denne figur, kan det konkluderes at det må give det højeste stabile bidrag, op imod de højeste frekvenser, ved at sætte højtaleren så tæt på den reflektive overflade som muligt.
 
@@ -132,10 +163,10 @@ Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refle
 
 Ved at kombinere bas-reflex kabinettets frekvensrespons med refleksionsbidraget opnås et frekvensrespons som kan ses i figur \ref{fig:sim_samletrespons}.
 
-Af figuren fremgår det, at der er skabt et stabilt gain omkring 6dB i de lavere frekvenser under højtalerens resonansfrekvens, som bringer tidligere uhørbare frekvenser op i et lydtryk, hvor de rent faktisk kan opfattes af det menneskelige ører. Derudover, er de frekvenser som tidligere lå lige på grænsen af denne hørbarhed, løftet til et niveau hvor det burde være væsentligt lettere at høre, hvis man jævnfører med figur \ref{fig:pressure}.
+Af figuren fremgår det, at der er skabt et stabilt gain omkring 6dB i de lavere frekvenser under højtalerens resonansfrekvens, som bringer tidligere uhørbare frekvenser op i et lydtryk, hvor de rent faktisk kan opfattes af det menneskelige ører. Derudover, er de frekvenser som tidligere lå lige på grænsen af denne hørbarhed, løftet til et niveau hvor det burde være væsentligt lettere at høre, hvis man jævnfører med figur \ref{fig:SPL}.
 
 Prisen der betales, er den destuktive interferens som skabes fra reflektionen, set på den blå kurve i figur \ref{fig:sim_samletrespons}, tidligere omtalt i afsnit \ref{sec:reflection}.\\
-Det er trade-off'et imellem forstærkningen i de lave frekvenser og irregulariteten i de højere frekvenser. 
+Dette er trade-off'et imellem forstærkningen i de lave frekvenser og irregulariteten i de højere frekvenser. 
 
 \begin{figure}[h!]
 	\centering
@@ -144,10 +175,3 @@ Det er trade-off'et imellem forstærkningen i de lave frekvenser og irregularite
 	\label{fig:sim_samletrespons}
 \end{figure}
 
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=.5\textwidth]{Pics/pressure}
-	\caption{Det menneskelige øres opfattelse af subjektivt konstant lydtryk med gengivelse over højttalere uden refleksioner og opfattet med to ører - figur 1.1, TAS, Elektroakustik \cite{Elektroakustik}} 
-	\label{fig:pressure}
-\end{figure}

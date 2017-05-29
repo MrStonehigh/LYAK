@@ -1,3 +1,4 @@
+\clearpage
 \section{Rum}
 
 Rummet der blev benyttet i projektet, er et mindre klasselokale på IHA, Katrinebjerg. 
@@ -9,11 +10,18 @@ B=460cm \hspace{3cm}
 L=580cm \hspace{3cm}
 H=250cm\\
 
-Ud fra Sabines formel, kan der estimeres en efterklangstid, hvor en rå absorbtionskoefficient tages i betragtning. 
-Ved malede mursten bør absorptionskoefficienten $\alpha=0.015$ \cite{Attenuation} og efterklangstiden T60 være lig:
+Da rummet er af mindre størrelse, kan efterklangstiden estimeres efter Sabines formel, hvor det blot er en rå antagelse af absorbtionskoefficienten der tages i betragtning. 
 
-\(T_{60}=\frac{V}{S}*0.16=\frac{69.6}{0.3930}*0.16=28.33 ms\)
+Ved malede mursten er absorptionskoefficienten tilnærmet $\alpha=0.015$ \cite{Attenuation} og efterklangstiden T60 vil være lig:
 
-\(S=\alpha*(2*H+2*L+2*B)=0.3930\)
+\begin{equation}\label{lign:T60}
+	T_{60}=\frac{V}{S}*0.16=\frac{69.6}{0.3930}*0.16=28.33 ms
+\end{equation}
+
+Hvor
+\begin{equation}
+	S=\alpha*(2*H+2*L+2*B)=0.3930
+\end{equation}
+
 
 Denne efterklangstid er målt for valgte lokale i afsnit \ref{chapt:Maal}.
