@@ -15,3 +15,7 @@ V=H*L*B;
 S=a*(2*H+2*L+2*B);
 
 T60=0.16*(V/(4*m*V-S*log(1-a)))
+
+
+
+H=1+alpha0/(1-rho^2*exp(-s*dt))
