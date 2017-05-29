@@ -2,14 +2,14 @@
 %clc,clear,close all;
 
 r=1;                                    %Distance til Mikrofon (m)
-LX=0.15;                                %Port længde (m)
+LX=0.14;                                %Port længde (m)
 %% Fysiske Parametre
 Ug=2.75;                                %Påtrykt Spænding (V)
 rho=1.18;                               %Air Mass Density (kg/m3)
 c=345;                                  %Speed of sound(m/s)
 pREF=20e-6;                             %Tryk-reference (pa)
 
-f=10:23000;                               %Frekvens (Hz)
+f=10:10000;                               %Frekvens (Hz)
 s=j*2*pi*f;                             %Laplace operator
 
 %% Parametre FW168 MIDWOOFER
@@ -66,6 +66,7 @@ figure,
 semilogx(f,LT,'-r','LineWidth',2), hold on, grid on
 semilogx(f,LD,'-g','LineWidth',1)
 semilogx(f,LP,'-b','LineWidth',1);
+axis([min(f) max(f) min(LT) 100]) 
 xlabel('Frekvens (Hz)')
 ylabel('dB SPL');
 legend('Samlet','Enhed','Port')
@@ -77,11 +78,11 @@ FC=1/(2*pi*sqrt(Mas*(Cas*Cab)/(Cas+Cab)));         %Grænsefrekvens
 FP=1/(2*pi*sqrt(MAP*Cab));                         %Port-resonans
 QTS=sqrt(Mms/Cres)/(Bl^2/Re+Rms);                  %Godhed af svingende system
 
-text(4,95, ['UG=' num2str((Ug)) ' V']) 
-text(4,91, ['Vas=' num2str(1000*Vb) 'liter'])
-text(4,87, ['fc=' num2str(round(FC)) 'Hz'])
-text(4,83, ['fp=' num2str(round(FP)) 'Hz']) 
-text(4,75, ['Måleafstand=' num2str(round(r)) ' m']) 
-text(4,71, ['Rp=' num2str(RP*100) ' cm'])
-text(4,67, ['Lp=' num2str(LX*100) ' cm'])
+text(12,99, ['UG=' num2str((Ug)) ' V']) 
+text(12,91, ['Vas=' num2str(1000*Vb) 'liter'])
+text(12,87, ['fc=' num2str(round(FC)) 'Hz'])
+text(12,83, ['fp=' num2str(round(FP)) 'Hz']) 
+text(12,75, ['Måleafstand=' num2str(round(r)) ' m']) 
+text(12,71, ['Rp=' num2str(RP*100) ' cm'])
+text(12,67, ['Lp=' num2str(LX*100) ' cm'])
 
