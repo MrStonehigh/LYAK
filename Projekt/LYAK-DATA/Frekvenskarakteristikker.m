@@ -145,13 +145,13 @@ ylabel('Gain [dBV]')
 
 %% Plot - Basrefleks på forsiden (forskellige længder) målt på membran
 figure(2)
-semilogx(frequency, frontLongClose)
+semilogx(frequency, frontLongFar)
 hold on
-semilogx(frequency, frontMediumClose)
+semilogx(frequency, frontMediumFar)
 hold on
-semilogx(frequency, frontShortClose)
+semilogx(frequency, frontShortFar)
 hold on
-semilogx(frequency, closedClose)
+semilogx(frequency, closedFar)
 grid on
 axis tight
 legend('Lang refleks', 'Medium refleks', 'Kort refleks','Lukket kabinet', 'Location', 'southeast')
