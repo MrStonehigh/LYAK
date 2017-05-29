@@ -121,7 +121,7 @@ Simfrequency = SimuleringArray(1:22991 , 2);
 
 %% Plot af frekvenskarakteristik - Direct
 figure(2)
-semilogx(frequency, Front20Direct + 160)
+semilogx(frequency, Front20Direct + 161)
 hold on
 semilogx(frequency, Side20Direct + 160)
 hold on
