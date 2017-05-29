@@ -39,11 +39,12 @@ Cas=Cms*(SD^2);                         %Driver compliance (m/N)
 Ras=Rms/SD^2;                           %Driver mechanical loss (Ns/m).
 RP=0.025;                               %Port radius (m).
 SP=pi*RP^2;                             %Areal af Port (m2)
-MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
 
-fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
-%LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)...%Beregnet længde af porten
-%    *Vas)-1.46*sqrt(SP/pi);
+%fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
+%LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)*Vas)-1.46*sqrt(SP/pi); %Beregnet længde af porten
+
+%MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
+
 
 %% Beregning af Volumenhastighed & Lydtryk
 
