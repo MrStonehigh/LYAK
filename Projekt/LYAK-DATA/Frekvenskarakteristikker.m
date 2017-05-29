@@ -173,11 +173,11 @@ legend('Lang refleks', 'Medium refleks', 'Kort refleks', 'Location', 'southeast'
 
 %% Plot - Basrefleks placeret forskellige steder (close)
 figure(4)
-semilogx(frequency, frontLongTube)
+semilogx(frequency, frontLongFar)
 hold on
-semilogx(frequency, sideLongTube)
+semilogx(frequency, sideLongFar)
 hold on
-semilogx(frequency, bottomLongTube)
+semilogx(frequency, bottomLongFar)
 grid on
 axis tight
 legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Location', 'southeast')
