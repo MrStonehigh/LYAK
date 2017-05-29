@@ -3,14 +3,14 @@
 
 \section{Resultater}
 
-Ved beregningen i Matlab, kan der simuleres et plot for frekvenskarakteristikken af bidraget fra højtalerenheden, porten og det samlede bidrag. \\
+Ved beregningen i Matlab, kan der simuleres et plot for frekvenskarakteristikken af bidraget fra hÃ¸jtalerenheden, porten og det samlede bidrag. \\
 
-For at eftervise at det 15cm lange rør er den optimale længde for basreflexen i projektets kabinet, er der ligeledes lavet simuleringer med de to andre test-størrelser til rådighed: 7cm og 3.5cm.\\
+For at eftervise at det 15cm lange rÃ¸r er den optimale lÃ¦ngde for basreflexen i projektets kabinet, er der ligeledes lavet simuleringer med de to andre test-stÃ¸rrelser til rÃ¥dighed: 7cm og 3.5cm.\\
 
-\subsection{Kort rør - 3.5 cm}
+\subsection{Kort port - 3.5 cm}
 
-Ved brug af en rørlængde på 3.5 cm, fås frekvensresponset som ses på figur \ref{fig:sim_kort}. \\
-Det fremgår af figuren at portens resonansfrekvens fp er helt oppe på 71 Hz, hvilket er over 2/3 højere end højtalerennhedens resonans. Dermed er porten ikke ordentligt afstemt, og de 24dB/oktav koster betydeligt på de lavere frekvenser. 
+Ved brug af en rÃ¸rlÃ¦ngde pÃ¥ 3.5 cm, fÃ¥s frekvensresponset som ses pÃ¥ figur \ref{fig:sim_kort}. \\
+Det fremgÃ¥r af figuren at portens resonansfrekvens fp er helt oppe pÃ¥ 71 Hz, hvilket er over 2/3 hÃ¸jere end hÃ¸jtalerennhedens resonans. Dermed er porten ikke ordentligt afstemt, og de 24dB/oktav koster betydeligt pÃ¥ de lavere frekvenser. 
 
 \begin{figure}[h!]
 	\centering
@@ -19,12 +19,12 @@ Det fremgår af figuren at portens resonansfrekvens fp er helt oppe på 71 Hz, hvi
 	\label{fig:sim_kort}
 \end{figure}
 
-\subsection{Mellemlangt rør - 7 cm}
+\subsection{Mellemlangt port - 7 cm}
 
-Ved brug af en rørlængde på 7 cm, fås frekvensresponset som ses på figur \ref{fig:sim_medium}. \\
-Det ses nu, at portens resonansfrekvens er rykket længere ned og nu resonerer ved 58 Hz. Dette er væsentligt tættere på at være afstemt med højtalerenhedens opgivne 45 Hz resonans, men er endnu ikke nede og give et korrekt bidrag for at løfte de lavere frekvenser. 
+Ved brug af en rÃ¸rlÃ¦ngde pÃ¥ 7 cm, fÃ¥s frekvensresponset som ses pÃ¥ figur \ref{fig:sim_medium}. \\
+Det ses nu, at portens resonansfrekvens er rykket lÃ¦ngere ned og nu resonerer ved 58 Hz. Dette er vÃ¦sentligt tÃ¦ttere pÃ¥ at vÃ¦re afstemt med hÃ¸jtalerenhedens opgivne 45 Hz resonans, men er endnu ikke nede og give et korrekt bidrag for at lÃ¸fte de lavere frekvenser. 
 
-Det er ligeledes værd at notere, at det generelle gain som er opnået, er lavere for det mellemlange rør end for det korte rør.  
+Det er ligeledes vÃ¦rd at notere, at det generelle gain som er opnÃ¥et, er lavere for det mellemlange rÃ¸r end for det korte rÃ¸r.  
 
 \begin{figure}[h!]
 	\centering
@@ -33,11 +33,11 @@ Det er ligeledes værd at notere, at det generelle gain som er opnået, er lavere 
 	\label{fig:sim_medium}
 \end{figure}
 
-\subsection{Langt rør - 15 cm}
+\subsection{Langt port - 15 cm}
 
-Ved brug af en rørlængde på 15 cm, fås frekvensresponset som ses på figur \ref{fig:sim_langt}. \\
-Denne længde er den teoretisk optimale, som det blev beregnet ovenfor i sektion \ref{sec:sim_calc}, og resonerer nu i 44 Hz, så port og højtaler er korrekt afstemt. 
-Der opretholdes dermed en højere gengivelse af de lavere frekvenser end det var muligt før og teorien stammer dermed overens med simuleringen. 
+Ved brug af en rÃ¸rlÃ¦ngde pÃ¥ 15 cm, fÃ¥s frekvensresponset som ses pÃ¥ figur \ref{fig:sim_langt}. \\
+Denne lÃ¦ngde er den teoretisk optimale, som det blev beregnet ovenfor i sektion \ref{sec:sim_calc}, og resonerer nu i 44 Hz, sÃ¥ port og hÃ¸jtaler er korrekt afstemt. 
+Der opretholdes dermed en hÃ¸jere gengivelse af de lavere frekvenser end det var muligt fÃ¸r og teorien stammer dermed overens med simuleringen. 
 
 \begin{figure}[h!]
 	\centering
@@ -49,10 +49,10 @@ Der opretholdes dermed en højere gengivelse af de lavere frekvenser end det var 
 
 \section{Bidrag fra reflektion}
 \label{sec:reflection}
-Foruden at skabe den bedst mulige gengivelse af de laveste frekvenser muligt vha. et afstemt basreflex-kabinet, fokuserer dette projekt ligeledes med at forsøge at skabe et yderligere bidrag i bassen ved hjælp af et refleksionsbidrag for nærliggende overflader. 
+Foruden at skabe den bedst mulige gengivelse af de laveste frekvenser muligt vha. et afstemt basreflex-kabinet, fokuserer dette projekt ligeledes med at forsÃ¸ge at skabe et yderligere bidrag i bassen ved hjÃ¦lp af et refleksionsbidrag for nÃ¦rliggende overflader. 
 
-Teorien beror sig på et fokus for refleksion ved en højtaler placeret i en hvis højde fra gulvet, men grundet de lave frekvenser og en sfærisk udbredelse, vil dette projekt ligeledes fokusere på et bidrag ift refleksion fra vægge. 
-Dette er dog et fokuspunkt for målingen, hvor simuleringen alene benytter den teori afbilledet i bogen (figur \ref{fig:reflect}
+Teorien beror sig pÃ¥ et fokus for refleksion ved en hÃ¸jtaler placeret i en hvis hÃ¸jde fra gulvet, men grundet de lave frekvenser og en sfÃ¦risk udbredelse, vil dette projekt ligeledes fokusere pÃ¥ et bidrag ift refleksion fra vÃ¦gge. 
+Dette er dog et fokuspunkt for mÃ¥lingen, hvor simuleringen alene benytter den teori afbilledet i bogen (figur \ref{fig:reflect}
 \fixme{tores bog reference}
 
 
@@ -63,32 +63,32 @@ Dette er dog et fokuspunkt for målingen, hvor simuleringen alene benytter den te
 	\label{fig:reflect}
 \end{figure}
 
-I jagten på et positivt bidrag i de lave frekvenser, vil man dog kunne forvente en destuktiv interferens, når højtaleren har en afstand til den reflekterede overflade på en halv bølgelængde. Herefter, vil frekvensresponset være temmeligt irregulært, før disse forstyrrelser dør ud i takt med at direktiviteten bliver mere betydende ved høje frekvenser. 
+I jagten pÃ¥ et positivt bidrag i de lave frekvenser, vil man dog kunne forvente en destuktiv interferens, nÃ¥r hÃ¸jtaleren har en afstand til den reflekterede overflade pÃ¥ en halv bÃ¸lgelÃ¦ngde. Herefter, vil frekvensresponset vÃ¦re temmeligt irregulÃ¦rt, fÃ¸r disse forstyrrelser dÃ¸r ud i takt med at direktiviteten bliver mere betydende ved hÃ¸je frekvenser. 
 
-Denne frekvens, også beskrevet som det første minimum, beregnes ved:\\
+Denne frekvens, ogsÃ¥ beskrevet som det fÃ¸rste minimum, beregnes ved:\\
 
-\(r_R(=\sqrt{r_D^2+4h^2})\) \hspace{2cm}Den reflekterede længde\\
+\(r_R(=\sqrt{r_D^2+4h^2})\) \hspace{2cm}Den reflekterede lÃ¦ngde\\
 \(f_R=\frac{c}{2(r_R-r_D)}\)\\
 
-Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refleksionsbidrag} at frekvensen for det første minimum falder længere og længere ned. Så ud fra den simple betragtning af denne figur, kan det konkluderes at det må give det højeste stabile bidrag, op imod de højeste frekvenser, ved at sætte højtaleren så tæt på den reflektive overflade som muligt.
+Ved hÃ¸jtalerens Ã¸gede hÃ¸jder fra gulvet, kan det ses pÃ¥ figur \ref{fig:refleksionsbidrag} at frekvensen for det fÃ¸rste minimum falder lÃ¦ngere og lÃ¦ngere ned. SÃ¥ ud fra den simple betragtning af denne figur, kan det konkluderes at det mÃ¥ give det hÃ¸jeste stabile bidrag, op imod de hÃ¸jeste frekvenser, ved at sÃ¦tte hÃ¸jtaleren sÃ¥ tÃ¦t pÃ¥ den reflektive overflade som muligt.
 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Pics/refleksionsbidrag}
-	\caption{Refleksionsbidrag fra nærmeste hårde, reflekterende overflade til forskellige højder for højtaleren } 
+	\caption{Refleksionsbidrag fra nÃ¦rmeste hÃ¥rde, reflekterende overflade til forskellige hÃ¸jder for hÃ¸jtaleren } 
 	\label{fig:refleksionsbidrag}
 \end{figure}
 
 \section{Samlet Frekvensrespons}
 
-Ved at kombinere bas-reflex kabinettets frekvensrespons, med det lavfrekvente gain for refleksionen ved nærtliggende overflader, opnås et frekvensrespons som kan ses i figur \ref{fig:sim_samletrespons}.
+Ved at kombinere bas-reflex kabinettets frekvensrespons, med det lavfrekvente gain for refleksionen ved nÃ¦rtliggende overflader, opnÃ¥s et frekvensrespons som kan ses i figur \ref{fig:sim_samletrespons}.
 
-Af figuren fremgår det, at der er skabt et stabilt gain omkring 6dB i de lavere frekvenser under højtalerens resonansfrekvens, som bringer tidligere uhørbare frekvenser op i et lydtryk, hvor de rent faktisk kan opfattes af det menneskelige ører. Derudover, er de frekvenser som tidligere lå lige på grænsen af denne hørbarhed, løftet til et niveau hvor det burde være væsentligt lettere at høre.
+Af figuren fremgÃ¥r det, at der er skabt et stabilt gain omkring 6dB i de lavere frekvenser under hÃ¸jtalerens resonansfrekvens, som bringer tidligere uhÃ¸rbare frekvenser op i et lydtryk, hvor de rent faktisk kan opfattes af det menneskelige Ã¸rer. Derudover, er de frekvenser som tidligere lÃ¥ lige pÃ¥ grÃ¦nsen af denne hÃ¸rbarhed, lÃ¸ftet til et niveau hvor det burde vÃ¦re vÃ¦sentligt lettere at hÃ¸re.
 
-Ulempen er desværre netop den destuktive interferens som skabes fra reflektionen, som ses på den blå kurve, tidligere omtalt i afsnit \ref{sec:reflection}.\\
-Dette må dermed være et trade-off, imellem forstærkningen i de lave frekvenser og irregulariteten i de højere frekvenser. 
+Ulempen er desvÃ¦rre netop den destuktive interferens som skabes fra reflektionen, som ses pÃ¥ den blÃ¥ kurve, tidligere omtalt i afsnit \ref{sec:reflection}.\\
+Dette mÃ¥ dermed vÃ¦re et trade-off, imellem forstÃ¦rkningen i de lave frekvenser og irregulariteten i de hÃ¸jere frekvenser. 
 
-Det kan ydermere betragtes, at kurven aftager med 24dB/oktav under højtalerens resonansfrekvens, netop som teorien beskrev.\fixme{tores bog ref}
+Det kan ydermere betragtes, at kurven aftager med 24dB/oktav under hÃ¸jtalerens resonansfrekvens, netop som teorien beskrev.\fixme{tores bog ref}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{Pics/sim_samletrespons}
