@@ -9,7 +9,9 @@ rho=1.18;                               %Air Mass Density (kg/m3)
 c=345;                                  %Speed of sound(m/s)
 pREF=20e-6;                             %Tryk-reference (pa)
 
-f=10:24000;                               %Frekvens (Hz)
+22304.5;
+
+f=10:10000;                               %Frekvens (Hz)
 s=j*2*pi*f;                             %Laplace operator
 
 %% Parametre FW168 MIDWOOFER
@@ -42,6 +44,9 @@ SP=pi*RP^2;                             %Areal af Port (m2)
 
 %fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
 %LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)*Vas)-1.46*sqrt(SP/pi); %Beregnet længde af porten
+
+%MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
+
 
 %% Beregning af Volumenhastighed & Lydtryk
 

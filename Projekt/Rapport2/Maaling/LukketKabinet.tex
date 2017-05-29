@@ -1,6 +1,6 @@
 \newpage
 \subsection{Lukket kabinet}
-Der blev først og fremmest set på karakteristikken for et helt lukket kabinet. Det vil altså sige, at alle propper blev sat over basreflekshullerne. Frekvenskarakteristikken blev herefter målt med CLIO Pocket lige foran membranen og i \SI{1}{\meter} afstand foran membranen. Resultatet af disse målinger ses på figuren nedenfor.\fixme{inkluder simulering i figuren. Derudover ville lidt teori om frekvenskarakteristikken for et lukket kabinet være lækkert, inden vi kaster os ud i målinger. Også så vi kan sammenholde teori med praksis -AB}
+Der blev først og fremmest set på karakteristikken for et helt lukket kabinet. Det vil altså sige, at alle propper blev sat over basreflekshullerne. Frekvenskarakteristikken blev herefter målt med CLIO Pocket lige foran membranen og i \SI{1}{\meter} afstand foran membranen. Resultatet af disse målinger ses på figuren nedenfor.
 \begin{figure}[H]
 	\centering
 	\vspace{-12pt}
@@ -19,13 +19,18 @@ Disse måleresultater udtaler sig som sagt ikke om hvordan basrefleksen påvirke
 	\caption{Teoretisk frekvenskarakteristik}
 	\vspace{-20pt}
 \end{wrapfigure}
-På figuren ovenfor optræder nogenlunde den type karakteristik vi forventer. Det er især resonansfrekvensen $f_s$ ved \SI{70}{\hertz} som er meget interessant idet denne frekvens adskiller det \textbf{fjederstyrede område} fra det \textbf{massestyrede område}. Derudover er der blevet målt en hældning på kurven svarende til omkring +18 dB/oktav i det fjederstyrede område - altså en smule mere end den teoretiske stigning.
+På figuren ovenfor optræder nogenlunde den type karakteristik vi forventer. Det er især resonansfrekvensen $f_s$ ved \SI{70}{\hertz} som er meget interessant idet denne frekvens adskiller det \textbf{fjederstyrede område} fra det \textbf{massestyrede område}. Derudover er der blevet målt en hældning på kurven svarende til omkring +18 dB/oktav i det fjederstyrede område - altså en smule mere end den teoretiske stigning på 12 dB/oktav.
 
-Hvis det, som omtalt i teorien, også antages at frekvensen $f_1$ ligger en dekade over $f_s$, så svarer denne frekvens altså til \SI{700}{\hertz}. Herefter vil direktiviteten begynde at spille en stor rolle på frekvenskarakteristikken.
+\newpage
+For at kunne sammenholde de målte data med vores simulerede data, så er der blevet tilføjet en simuleret kurve på grafen ovenfor. Kurvens placering på Y-aksen er dog arbitrær og vil kun afhænge af forstærkningen i højtaleren. Den simulerede kurve har dog ingen peak ved sin resonansfrekvens - \fxnote{hvorfor har den ikke det? - TS} men den tilsvarende frekvens vil være \SI{-3}{\decibel}-frekvensen som ligger ved \SI{86}{\hertz}; altså \SI{16}{\hertz} over den målte.
 
-På grafen ses det også, at når CLIO-mikrofonen flyttes længere væk fra membranen, så bevarer karakteristikken nogenlunde sin form i det massestyrede område og et godt stykke ind i både området over og under i frekvensspektret. Den største forskel er dog, at karakteristikken er blevet dæmpet med omkring -30 dB. Derfor er den ovenstående kurve målt i 1 meters afstand også blevet korrigeret med +30 dB for at vise dette. \fixme{Vi behøver vel ikke korrigere? Vi skal bare holde 1m afstand-måling sammen med 1m afstand, og tæt afstand med tæt afstand}
+På grafen ses det også, at når CLIO-mikrofonen flyttes længere væk fra membranen, så bevarer karakteristikken nogenlunde sin form omkring resonansfrekvensen - men bliver blot dæmpet med omkring \SI{30}{\decibel}. Denne dæmpning er forsøgt vist på grafen (gul)
 
-For at eftervise at dette er korrekt, så ses der på den nedenstående formel der giver en sammenhæng mellem lydtryk og afstand fra lydgiveren:
+Ved de laveste frekvenser (under \SI{20}{\hertz}) ligner to former ikke længere hinanden. Dette er dog under det hørbare spektrum og er ikke interessant for disse målinger, men den kan skyldes, at dæmpningsfaktoren i luft er meget anderledes ved lave frekvenser i forhold til høje frekvenser.
+
+På samme måde begynder to grafer at afvige fra hinanden ved frekvenser over \SI{1000}{\hertz}. Dette passer dog fint med, at vi bevæger os ind i et frekvensområde, hvor karakteristikken i større og større grad bliver afhængig af direktiviteten. Det er altså meget muligt, at CLIO-mikrofonen ikke blev placeret præcist lige ud for højtalermembranen.
+
+For at eftervise at de fundne målinger, så ses der på den nedenstående formel; som giver en sammenhæng mellem lydtryk og afstand fra lydgiveren:
 \begin{equation}
 L_2 = L_1 - \left| 20 \cdot \log \left( \frac{r_1}{r_2} \right) \right|
 \end{equation}
@@ -36,5 +41,3 @@ Hvor værdierne $L_1$ og $L_2$ er lydtryksniveauet målt i afstandene $r_1$ og $
 \end{equation}
 
 Hvilket altså vil sige, at CLIO-mikrofonen har været placeret omkring \SI{3}{\centi\meter} fra højtaleren. Dette virker også meget sandsynligt.
-
-Grunden til afvigelsen i det fjederstyrede område\fixme{ift hvad? - AB} kan skyldes, at dæmpningsfaktoren i luft er meget anderledes ved lave frekvenser\fixme{ref? - AB}. Afvigelsen ved de højere frekvenser skyldes at direktiviten spiller ind. Det kan derfor sagtens tænkes, at CLIO-mikrofonen ikke har stået præcist vinkelret ind på højtalerens midte. \fixme{Men netop de lavere frekvenser burde vel være ligeglade, da der her ikke spiller direktivitet ind (fjederstyret område) - AB}
