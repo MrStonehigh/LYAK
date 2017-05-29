@@ -6,8 +6,10 @@ clear;
 
 %% Import af simuleringsværdier
 LukketKabinetData = load('LukketKabinetData');
-LukketKabinetFrekvens
-LukketKabinetGain = struct2cell(LukketKa
+LukketKabinetArray = cell2mat(struct2cell(LukketKabinetData))';
+ 
+LukketKabinetGain = LukketKabinetArray(1:22991, 1);
+LukketKabinetFrequency = LukketKabinetArray(1:22991 , 2);
 
 %% Indlæsning af data (Lukket kabinet)
 closedCloseTable = readtable('Closed/Close');
@@ -132,10 +134,12 @@ hold on
 semilogx(frequency, closedFar)
 hold on
 semilogx(frequency, closedFar + 25)
+hold on
+semilogx(LukketKabinetFrequency, LukketKabinetGain - 130)
 grid on
 axis tight
-legend('Ved membran', 'Afstand 1 meter', 'Forskudt +30 dB', 'Location', 'southeast')
-title('Lukket kabinet')
+legend('Ved membran', 'Afstand 1 meter', 'Forskudt +30 dB', 'Simulering', 'Location', 'southeast')
+%title('Lukket kabinet')
 xlabel('Frekvens [Hz]')
 ylabel('Gain [dBV]')
 
@@ -165,7 +169,7 @@ semilogx(frequency, frontShortTube)
 grid on
 axis tight
 legend('Lang refleks', 'Medium refleks', 'Kort refleks', 'Location', 'southeast')
-title('Basrefleksens karakteristik ved forskellige længder basrefleks')
+%title('Basrefleksens karakteristik ved forskellige længder basrefleks')
 
 %% Plot - Basrefleks placeret forskellige steder (close)
 figure(4)

@@ -9,9 +9,7 @@ rho=1.18;                               %Air Mass Density (kg/m3)
 c=345;                                  %Speed of sound(m/s)
 pREF=20e-6;                             %Tryk-reference (pa)
 
-%22304.5;
-
-f=10:22304.5;                              %Frekvens (Hz)
+f=10:24000;                               %Frekvens (Hz)
 s=j*2*pi*f;                             %Laplace operator
 
 %% Parametre FW168 MIDWOOFER
