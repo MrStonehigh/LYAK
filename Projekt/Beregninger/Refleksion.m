@@ -82,4 +82,4 @@ xlabel('Frekvens (Hz)');
 ylabel('SPL (dB)');
 legend('h=.2m','h=.4m','h=.6m','h=.8m')
 
-Lsolo=L(1,:)-LD(1,:);
+Lsolo3=L(3,:)-LD(3,:);
