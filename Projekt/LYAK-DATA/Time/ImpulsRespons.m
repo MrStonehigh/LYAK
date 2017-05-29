@@ -110,6 +110,7 @@ Side60Listen = table2array(Side60ListenTable(1:end, 2));
 Side80Listen = table2array(Side80ListenTable(1:end, 2));
 Side100Listen = table2array(Side100ListenTable(1:end, 2));
 
+load('Lfinal1', ');
 
 %% Plot af frekvenskarakteristik - Direct
 figure(2)
