@@ -2,15 +2,19 @@ clear;
 
 %% Indlæsning af impulsresponsdata
 impulseResponse = readtable('ImpulsRespons');
-timeScale = table2array(impulseResponse(1:12000, 1));
-Response = table2array(impulseResponse(1:12000, 2));
+timeScale = table2array(impulseResponse(1:24000, 1));
+Response = table2array(impulseResponse(1:24000, 2));
 
-%% Omregning til dB
+%% Omregning til dB:SPL
+p0 = 20E-6;
+Lp = 20 * log10(Response ./ p0);
 
 %% Plot af impulsrespons
 figure(1)
-plot(timeScale, Response)
+plot(timeScale, Lp)
 grid on
+xlabel('Tid [s]')
+ylabel('Sound Pressure Level [dB]')
 
 %% Indlæsning af data - Bottom
 % Direct
@@ -105,3 +109,19 @@ Side40Listen = table2array(Side40ListenTable(1:end, 2));
 Side60Listen = table2array(Side60ListenTable(1:end, 2));
 Side80Listen = table2array(Side80ListenTable(1:end, 2));
 Side100Listen = table2array(Side100ListenTable(1:end, 2));
+
+%% Plot af frekvenskarakteristik - Direct
+figure(2)
+semilogx(frequency, Front20Direct)
+hold on
+semilogx(frequency, Side20Direct)
+hold on
+semilogx(frequency, Side20Direct)
+hold on
+semilogx(frequency, Simulering)
+grid on
+axis tight
+legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Ingen refleks', 'Location', 'southeast')
+%title('Basrefleksen placeret forskellige steder (lytteafstand)')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')

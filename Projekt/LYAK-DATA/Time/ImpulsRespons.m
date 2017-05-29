@@ -109,3 +109,37 @@ Side40Listen = table2array(Side40ListenTable(1:end, 2));
 Side60Listen = table2array(Side60ListenTable(1:end, 2));
 Side80Listen = table2array(Side80ListenTable(1:end, 2));
 Side100Listen = table2array(Side100ListenTable(1:end, 2));
+
+
+%% Plot af frekvenskarakteristik - Direct
+figure(2)
+semilogx(frequency, Front20Direct)
+hold on
+semilogx(frequency, Side20Direct)
+hold on
+semilogx(frequency, Bottom20Direct)
+hold on
+semilogx(frequency, Simulering)
+grid on
+axis tight
+legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Simulering', 'Location', 'southeast')
+%title('Basrefleksen placeret forskellige steder (Direkte)')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
+
+
+%% Plot af frekvenskarakteristik - Listen
+figure(3)
+semilogx(frequency, Front20Listen)
+hold on
+semilogx(frequency, Side20Listen)
+hold on
+semilogx(frequency, Bottom20Listen)
+hold on
+%semilogx(frequency, Simulering)
+grid on
+axis tight
+legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Simulering', 'Location', 'southeast')
+%title('Basrefleksen placeret forskellige steder (Lytteafstand)')
+xlabel('Frekvens [Hz]')
+ylabel('Gain [dBV]')
