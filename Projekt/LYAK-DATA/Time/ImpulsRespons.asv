@@ -2,19 +2,15 @@ clear;
 
 %% Indlæsning af impulsresponsdata
 impulseResponse = readtable('ImpulsRespons');
-timeScale = table2array(impulseResponse(1:24000, 1));
-Response = table2array(impulseResponse(1:24000, 2));
+timeScale = table2array(impulseResponse(1:12000, 1));
+Response = table2array(impulseResponse(1:12000, 2));
 
-%% Omregning til dB:SPL
-p0 = 20E-6;
-Lp = 20 * log10(Response ./ p0);
+%% Omregning til dB
 
 %% Plot af impulsrespons
 figure(1)
-plot(timeScale, Lp)
+plot(timeScale, Response)
 grid on
-xlabel('Tid [s]')
-ylabel('Sound Pressure Level [dB]')
 
 %% Indlæsning af data - Bottom
 % Direct
