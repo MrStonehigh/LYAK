@@ -2,14 +2,14 @@
 %clc,clear,close all;
 
 r=1;                                    %Distance til Mikrofon (m)
-%LX=0.15;                                %Port længde (m)
+LX=0.15;                                %Port længde (m)
 %% Fysiske Parametre
 Ug=2.75;                                %Påtrykt Spænding (V)
 rho=1.18;                               %Air Mass Density (kg/m3)
 c=345;                                  %Speed of sound(m/s)
 pREF=20e-6;                             %Tryk-reference (pa)
 
-f=10:10000;                               %Frekvens (Hz)
+f=10:23000;                               %Frekvens (Hz)
 s=j*2*pi*f;                             %Laplace operator
 
 %% Parametre FW168 MIDWOOFER
@@ -41,9 +41,9 @@ RP=0.025;                               %Port radius (m).
 SP=pi*RP^2;                             %Areal af Port (m2)
 MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)
 
-fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
-LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)...%Beregnet længde af porten
-    *Vas)-1.46*sqrt(SP/pi);
+%fp=1/(2*pi*sqrt(MAP*Cab));             %Resonansfrekvens for port
+%LX=(1.4*100e3*SP)/(rho*((2*pi*fp)^2)...%Beregnet længde af porten
+ %   *Vb)-1.46*sqrt(SP/pi);
 
 %% Beregning af Volumenhastighed & Lydtryk
 qF=Fa./(Rae+s*Mas+1./(s*Cas)+Ras+1./(s*Cab+1./(s*MAP))); %Volumenhastighed Front
