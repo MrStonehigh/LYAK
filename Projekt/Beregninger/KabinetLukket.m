@@ -52,7 +52,7 @@ LD=20*log10(abs(pF)/pREF);                               %Lydtryk Enhed (dB)
 
 figure,
  
-semilogx(f,LD,'-g','LineWidth',1)
+semilogx(f,LD,'-g','LineWidth',1), grid on
 xlabel('Frekvens (Hz)')
 ylabel('dB SPL');
 title('Frekvenskarakteristik for Lukket kabinet');
@@ -64,6 +64,5 @@ FC=1/(2*pi*sqrt(Mas*(Cas*Cab)/(Cas+Cab)));         %Grænsefrekvens
 text(15,89, ['UG=' num2str((Ug)) ' V']) 
 text(15,88, ['Vas=' num2str(1000*Vb) 'liter'])
 text(15,87, ['fc=' num2str(round(FC)) 'Hz'])
-text(15,86, ['fp=' num2str(round(FP)) 'Hz']) 
-text(15,84, ['Måleafstand=' num2str(round(r)) ' m']) 
+text(15,86, ['Måleafstand=' num2str(round(r)) ' m']) 
 
