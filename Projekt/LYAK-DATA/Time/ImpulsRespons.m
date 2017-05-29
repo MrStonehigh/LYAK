@@ -11,7 +11,10 @@ Lp = 20 * log10(Response ./ p0);
 
 %% Plot af impulsrespons
 figure(1)
-plot(timeScale, Lp)
+subplot(211), plot(timeScale(1:12000), Response(1:12000))
+xlabel('Tid [s]')
+ylabel('Tryk [Pa]')
+subplot(212), plot(timeScale, Lp)
 grid on
 xlabel('Tid [s]')
 ylabel('Sound Pressure Level [dB]')
@@ -110,17 +113,21 @@ Side60Listen = table2array(Side60ListenTable(1:end, 2));
 Side80Listen = table2array(Side80ListenTable(1:end, 2));
 Side100Listen = table2array(Side100ListenTable(1:end, 2));
 
-load('Lfinal1', ');
+SimuleringStruct = load('SimuleringData');
+SimuleringArray = cell2mat(struct2cell(SimuleringStruct))';
+ 
+Simulering = SimuleringArray(1:22991, 1);
+Simfrequency = SimuleringArray(1:22991 , 2);
 
 %% Plot af frekvenskarakteristik - Direct
 figure(2)
-semilogx(frequency, Front20Direct)
+semilogx(frequency, Front20Direct + 160)
 hold on
-semilogx(frequency, Side20Direct)
+semilogx(frequency, Side20Direct + 160)
 hold on
-semilogx(frequency, Bottom20Direct)
+semilogx(frequency, Bottom20Direct + 160)
 hold on
-semilogx(frequency, Simulering)
+semilogx(Simfrequency, Simulering)
 grid on
 axis tight
 legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Simulering', 'Location', 'southeast')
@@ -131,13 +138,13 @@ ylabel('Gain [dBV]')
 
 %% Plot af frekvenskarakteristik - Listen
 figure(3)
-semilogx(frequency, Front20Listen)
+semilogx(frequency, Front20Listen + 170)
 hold on
-semilogx(frequency, Side20Listen)
+semilogx(frequency, Side20Listen + 170)
 hold on
-semilogx(frequency, Bottom20Listen)
+semilogx(frequency, Bottom20Listen + 170)
 hold on
-%semilogx(frequency, Simulering)
+semilogx(Simfrequency, Simulering)
 grid on
 axis tight
 legend('Forsiderefleks', 'Siderefleks', 'Undersiderefleks', 'Simulering', 'Location', 'southeast')
