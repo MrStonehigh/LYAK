@@ -79,10 +79,10 @@ FP=1/(2*pi*sqrt(MAP*Cab));                         %Port-resonans
 QTS=sqrt(Mms/Cres)/(Bl^2/Re+Rms);                  %Godhed af svingende system
 
 text(12,99, ['UG=' num2str((Ug)) ' V']) 
-text(12,91, ['Vas=' num2str(1000*Vb) 'liter'])
-text(12,87, ['fc=' num2str(round(FC)) 'Hz'])
-text(12,83, ['fp=' num2str(round(FP)) 'Hz']) 
-text(12,75, ['Måleafstand=' num2str(round(r)) ' m']) 
-text(12,71, ['Rp=' num2str(RP*100) ' cm'])
-text(12,67, ['Lp=' num2str(LX*100) ' cm'])
+text(12,97, ['Vas=' num2str(1000*Vb) 'liter'])
+text(12,95, ['fc=' num2str(round(FC)) 'Hz'])
+text(12,93, ['fp=' num2str(round(FP)) 'Hz']) 
+text(12,91, ['Måleafstand=' num2str(round(r)) ' m']) 
+text(12,89, ['Rp=' num2str(RP*100) ' cm'])
+text(12,87, ['Lp=' num2str(LX*100) ' cm'])
 

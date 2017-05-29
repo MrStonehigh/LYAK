@@ -21,7 +21,7 @@ Rms=sqrt(Mms/Cms)/Qms;               %Mekanisk tabsmodstand (ohm)
 
 Ug=2.75;                             %Påtrykt spænding (V)
 rho=1.18;                            %Air Mass Density (kg/m3)
-f=10:23000;                           %Frequency (Hz)
+f=10:10000;                           %Frequency (Hz)
 pRef=20e-6;                          %Referencetryk (pa)
 c=345;                               %Lydens hastighed (m/s)
 s=j*2*pi*f;                          %Laplace operator
