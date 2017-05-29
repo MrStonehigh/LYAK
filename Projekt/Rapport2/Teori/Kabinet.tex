@@ -1,14 +1,14 @@
 \section{Kabinet}
 
 For at øge SPL for højtalerens resonansfrekvens, sættes højtaleren i et kabinet der er designet til formålet.
-Kabinettets ønskede volumen kan findes i databladet for højtaleren som ækvivalent volumen $V_{as} = 16.5L$. Ved denne højtalervolumen vil resonansfrekvensen $f_s$ dog øges med ca. $41\%$ da den indskudte masse af luften vil give højtaleren mindre bevægelsesfrihed.
+Kabinettets ønskede volumen kan findes i databladet for højtaleren som ækvivalent volumen $V_{as} = 16.5L$. Ved denne højtalervolumen vil resonansfrekvensen $f_s$ dog øges med ca. $41$ da den indskudte masse af luften vil give højtaleren mindre bevægelsesfrihed.
 
-Med et basreflekskabinet vil man kunne sænke resonansfrekvensen igen da man med luftmassen i porten, vil skabe en fjedervirkning som sammen med kabinettets indespærrede luft kan afstemmes til en given resonansfrekvens. For størst effekt, bør denne resonans afstemmes til højtalerens resonansfrekvens $f_s=45Hz$.
+Med et basreflekskabinet vil man kunne sænke resonansfrekvensen igen da man med luftmassen i porten, vil skabe en fjedervirkning som sammen med kabinettets indespærrede luft kan afstemmes til en given resonansfrekvens. For størst effekt, bør denne resonans afstemmes til højtalerens resonansfrekvens $f_s = 45Hz$.
 
 Portens resonansfrekvens findes med ligning \ref{lig:fport}
 
 \begin{equation}\label{lig:fport}
-f_{port}=\frac{1}{2 \pi \sqrt{M_{AP} C_{AB}}
+f_{port}=\frac{1}{2 \pi \sqrt{M_{AP} C_{AB}}}
 \end{equation}
 
 Hvor $M_{AP}$ er portens akustiske luftmasse og $C_{AB}$ er massen af kabinettets akustiske luftvolumen.
@@ -30,5 +30,5 @@ Indsætter man ligning \ref{lig:MAP} i ligning \ref{lig:fport} og solver for $f_
 REsonansfrekvensen for kabinettet udregnes i ligning \ref{lig:fckabinet}
 
 \begin{equation}\label{lig:fckabinet}
-f_{kabinet}=\frac{1}{2 \pi \sqrt{M_{AS} \cdot C_{AS}||C_{AB}} = 64.57Hz
+f_{kabinet}=\frac{1}{2 \pi \sqrt{M_{AS} \cdot C_{AS}||C_{AB}}} = 64.57Hz
 \end{equation}
