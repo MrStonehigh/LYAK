@@ -138,25 +138,39 @@ I jagten på et positivt bidrag i de lave frekvenser, vil man dog kunne forvente
 
 Denne frekvens \textbf{$f_R$}, også beskrevet som det første minimum, beregnes ved:\\
 \begin{equation}\label{lign:fR}
-	f_R=\frac{c}{2(r_R-r_D)}
+f_R=\frac{c}{2(r_R-r_D)}
 \end{equation}
 
 hvor $r_R$ er den reflekterede længde, givet ved:
 \begin{equation}
-	r_R=\sqrt{r_D^2+4h^2}
+r_R=\sqrt{r_D^2+4h^2}
 \end{equation}
 
+Man kan beregne de seperate bidrag, ud fra formlerne \ref{lign:refD} og \ref{lign:refR} og derfra beregne det samlede bidrag, ved at lægge dem sammen til udtrykket der ses i \ref{lign:refl}. 
 
-Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refleksionsbidrag} at frekvensen for det første minimum falder længere og længere ned. Så ud fra den simple betragtning af denne figur, kan det konkluderes at det må give det højeste stabile bidrag, op imod de højeste frekvenser, ved at sætte højtaleren så tæt på den reflektive overflade som muligt.
+\begin{equation}\label{lign:refD}
+	p_{D4\pi}=j\frac{\rho fq}{2R_D}exp(-jkr_D)
+\end{equation}
+\begin{equation}\label{lign:refR}
+p_{R4\pi}=j\frac{\rho fq}{2R_R}exp(-jkr_R)
+\end{equation}
+\begin{equation}\label{lign:refl}
+p=j\frac{\rho fq}{2R_D}(1+\frac{r_D}{r_R}D(\theta)exp(-jk(r_R-r_D)))
+\end{equation}
+
+Her udgør D($\theta$) et udtryk for direktiviteten af lyden, som gør refleksionen mindre indvirkende ved høje frekvenser. 
+
+Ved højtalerens øgede højder fra gulvet, kan det ses på figur \ref{fig:refleksionsbidrag} at frekvensen for det første minimum falder længere og længere ned, ligesom bidraget daler fra 6dB v. 20 centimeters højde og ned til lige under 4dB for en højde på 80cm. 
+Så ud fra den simple betragtning af figur \ref{fig:refleksionsbidrag}, kan det konkluderes at det må give det højeste stabile bidrag, op imod de højeste frekvenser, ved at sætte højtaleren så tæt på den reflektive overflade som muligt.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{Pics/refleksionsbidrag}
-	\caption{Refleksionsbidrag fra nærmeste hårde, reflekterende overflade til forskellige højder for højtaleren } 
+	\includegraphics[width=.8\textwidth]{Pics/refleksionsbidrag}
+	\caption{Refleksionsbidrag fra reflekterende overflade til forskellige højder for højtaleren } 
 	\label{fig:refleksionsbidrag}
 \end{figure}
 
-
+\newpage
 
 
 \section{Samlet Frekvensrespons}
@@ -170,8 +184,8 @@ Dette er trade-off'et imellem forstærkningen i de lave frekvenser og irregulari
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=.8\textwidth]{Pics/sim_samletrespons2}
-	\caption{Frekvensrespons for Basreflex-kabinettet med vs uden refleksionsbidraget} 
+	\includegraphics[width=.73\textwidth]{Pics/sim_samletrespons2}
+	\caption{Frek-Respons for Basreflex-kabinettet med vs uden refleksionsbidraget} 
 	\label{fig:sim_samletrespons}
 \end{figure}
 

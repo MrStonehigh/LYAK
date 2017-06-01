@@ -32,11 +32,11 @@ SD=119e-4;                              %Membranens effektive Areal (m^2)
 
 
 Fa=(Bl*Ug)/(Re*SD);                     %Akustisk kraft
-Cab=Vb/(rho*c^2);                      %Akustik eftergivelighed af luftvoluminet
-Rae=(Bl^2)/(Re*SD^2);                   %Electrical DC resistance.
-Mas=Mms/(SD^2);                         %Driver moving mass (kg).
-Cas=Cms*(SD^2);                         %Driver compliance (m/N)
-Ras=Rms/SD^2;                           %Driver mechanical loss (Ns/m).
+Cab=Vb/(rho*c^2);                       %Akustik eftergivelighed af luftvoluminet
+Rae=(Bl^2)/(Re*SD^2);                   %Elektrisk DC modstand.
+Mas=Mms/(SD^2);                         %Den bevægelige akustiske masse (kg).
+Cas=Cms*(SD^2);                         %Akustisk eftergivelighed (m/N)
+Ras=Rms/SD^2;                           %Akustisk Modstand (Ns/m).
 RP=0.025;                               %Port radius (m).
 SP=pi*RP^2;                             %Areal af Port (m2)
 MAP=(rho/SP)*(LX+1.46*sqrt(SP/pi));     % Akustisk masse af luften i porten (kg)

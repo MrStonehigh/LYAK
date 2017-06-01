@@ -5,7 +5,7 @@ for i=1:4
 %% Ændring af Måleparametre
 
 rd=1;                                %Distance to Microphone (m)
-h=h+.2;                                %Højtalerens højde ift gulv (m)
+h=h+.2;                              %Højtalerens højde ift gulv (m)
 
 %% Parametre FW168 MIDWOOFER
 Re=7.2;                              %DC-Modstand (ohm)
@@ -20,8 +20,8 @@ Rms=sqrt(Mms/Cms)/Qms;               %Mekanisk tabsmodstand (ohm)
 %% Fysiske Parametre
 
 Ug=2.75;                             %Påtrykt spænding (V)
-rho=1.18;                            %Air Mass Density (kg/m3)
-f=10:10000;                           %Frequency (Hz)
+rho=1.18;                            %Luftmassens Densitet (kg/m3)
+f=10:10000;                          %Frekvens (Hz)
 pRef=20e-6;                          %Referencetryk (pa)
 c=345;                               %Lydens hastighed (m/s)
 s=j*2*pi*f;                          %Laplace operator
@@ -59,7 +59,7 @@ L(i,:)=20*log10(abs(p)/pRef);                        %Samlet (dB)
 
 end
 
-%{
+
 figure,
 semilogx(L); title('Lydtryk fra højtalerenhed')
 hold on, grid on
@@ -69,7 +69,7 @@ axis([10 f(end) min(L(1,:)) max(L(1,:))])
 legend('Samlet','Direkte','Reflekteret');
 xlabel('Frekvens (Hz)');
 ylabel('SPL (dB)');
-%}
+
 
 figure, 
 semilogx(L(1,:)-LD(1,:),'LineWidth',3); title('Refleksionsbidrag')

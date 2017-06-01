@@ -3,7 +3,7 @@
 clc,clear, close all;
 
 %%
-
+c=343                   %Lydens hastighed (m/s)
 H=2.5;                  %Rummets Højde  (m)
 L=5.8;                  %Rummets Længde (m)
 B=4.8;                  %Rummets Bredde (m)
@@ -18,4 +18,8 @@ T60=0.16*(V/(4*m*V-S*log(1-a)))
 
 
 
-H=1+alpha0/(1-rho^2*exp(-s*dt))
+%H=1+alpha0/(1-rho^2*exp(-s*dt))
+
+scroedinger=2000*sqrt(T60/V)
+MinResFrekvL=c/L
+MinResFrekvB=c/B
