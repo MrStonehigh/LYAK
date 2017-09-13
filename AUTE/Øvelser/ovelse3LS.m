@@ -177,14 +177,14 @@ G_mphpol=cart2pol(abs(h_mph),f);
 
 %% Regularisation
 close all, clc
-rho1=2;
-rho2=10;
+rho1=15;
+rho2=5;
 G_room10msreg=(1+rho1)./(H_room10ms+rho2);
 
 figure()
 subplot(2,1,1)
 semilogx(f10ms,10*log10(abs(G_room10msreg)))
-title('G_{mph10ms}')
+title('G_{room10msreg}')
 %axis(akser)
 grid on
 subplot(2,1,2)
@@ -192,6 +192,37 @@ semilogx(f10ms,10*log10(abs(G_room10ms)))
 title('G_{room10ms}')
 axis(akser)
 grid on
+
+%% LPC exess phase
+close all, clc
+order=4;
+[a4,gain]=lpc(h_room10ms,4);
+akser=[100 fs 15 55]
+
+G_room10msLPC=filter([0 -a4(2:end)],1,G_room10ms);
+figure()
+semilogx(f10ms,10*log10(abs(G_room10msLPC)),'--r')
+hold on
+grid on
+title('LPC order=4')
+semilogx(f10ms,10*log10(abs(G_room10ms)),'b')
+legend('Raw invers filter','LPC estimated filter')
+axis(akser)
+
+
+[a12,gain]=lpc(h_room,12);
+
+G_room10msLPC=filter([0 -a12(2:end)],1,G_room10ms);
+figure()
+semilogx(f10ms,10*log10(abs(G_room10msLPC)),'--r')
+hold on
+grid on
+title('LPC order=12')
+semilogx(f10ms,10*log10(abs(G_room10ms)),'b')
+axis(akser)
+legend('Raw invers filter','LPC estimated filter')
+
+
 
 %% Hilbert transformation
 XR=hilbert(h_room);
