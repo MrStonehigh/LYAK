@@ -8,6 +8,10 @@ radii=4;
 fileL='';
 fileR='';
 
+
+    cd 'C:\Users\Laste\Documents\MATLAB'
+    disp('Directory changed')
+
 while ((exist(fileL,'file') ~= 2) && (exist(fileR,'file') ~= 2))
  
     if(azi==0)
@@ -33,9 +37,12 @@ hrtfR=['R' int2str(eleArr(eleInd)) 'e0' int2str(360-azi) 'a.wav']
 fileL=fullfile('HRTF','full',eleFil,hrtfL)
 fileR=fullfile('HRTF','full',eleFil,hrtfR)
 exist(fileL,'file')
-
+if(azi==360)
+    azi=0;
+else
     azi=azi+1;
-    disp(azi)
+end
+disp(azi)
 end
 disp('Im out!')
 azi=azi-1
@@ -125,4 +132,80 @@ figure()
 semilogx(Ff,10*log10(abs(S1fft)))
 xlim([10 fs/2])
 grid on
+
+%% :::::::::: ALGOFLEX :::::::::
+
+system('start C:\projects\Tools\AlgoFlex\bin\win32_x86\Release\AlgoFlexServer.exe');
+ServerIpName = 'localhost';
+serverID = AlgoFlexClient('OpenServCon',ServerIpName,4242);
+
+fs = 48000;
+
+AlgoFlexClient(serverID,'SetSampleRate',fs);
+
+[idMatPlayer nameMatPlayer] = AlgoFlexClient(serverID,'Create', 'MatrixPlayer',0,1);
+
+rectime=10;      %Recording time for MatrixRecorder in sec
+sampno=fs*rectime;
+[idMatRec nameMatRec] = AlgoFlexClient(serverID,'Create','MatrixRecorder',1,0);
+
+[idGain nameGain] = AlgoFlexClient(serverID,'Create','Gain',1,1);
+
+AlgoFlexClient(serverID,'ConnectAudio',idMatPlayer,1,idGain,1);
+AlgoFlexClient(serverID,'ConnectAudio',idGain,1,idMatRec,1);
+%%
+clc
+% Audiostream
+[idAudio nameAudio]=AlgoFlexClient(serverID,'Create','AudioStream',2,2);
+AlgoFlexClient(serverID,'Help','AudioStream')
+AlgoFlexClient(serverID,'GetData',nameAudio,'Capabilities')
+AlgoFlexClient(serverID,'SetData',nameAudio,'Device','Primary Sound Driver')
+AlgoFlexClient(serverID,'SetData',nameAudio,'BufferSize',1024)
+
+[idFastConv nameFastConv]=AlgoFlexClient(serverID,'Create','FastConv',2,1)
+AlgoFlexClient(serverID,'Help','FastConv')
+
+[idFilePlay nameFilePlay]=AlgoFlexClient(serverID,'Create','FilePlayer',0,2)
+AlgoFlexClient(serverID,'Help','FilePlayer')
+AlgoFlexClient(serverID,'SetData',idFilePlay,'InputFileName','HRTF\Nirvana.wav')
+AlgoFlexClient(serverID,'SetData',idFilePlay,'PlayMode','whole')
+AlgoFlexClient(serverID,'SetData',idFilePlay,'BufferSize',1024)
+AlgoFlexClient(serverID,'SetData',idFilePlay,'CurPosRate',1)
+AlgoFlexClient(serverID,'GetData',idFilePlay,'FileSize')
+
+
+[idProd nameProd] = AlgoFlexClient(serverID,'Create','Prod',2,1)
+AlgoFlexClient(serverID,'SetData',idProd,'Mode','Numerical')
+%AlgoFlexClient(serverID,'SetData',idProd,'ParmX1',IID_L)
+%AlgoFlexClient(serverID,'SetData',idProd,'ParmX2','Prod')
+
+%% :::::::: Route audio :::::::::
+
+AlgoFlexClient(serverID,'ConnectAudio',idFilePlay, [1 2],idAudio,[1 2])
+
+% :::: Set Exe sequence ::::::
+AlgoFlexClient(serverID,'SetExeSeq',[idFilePlay idAudio])
+
+
+%% :::: start ::::::::
+AlgoFlexClient(serverID,'SetSampleRate',fs);
+AlgoFlexClient(serverID,'MultiStart');
+
+%%
+
+AlgoFlexClient(serverID,'GetData',idFilePlay,'CurrentPosition')
+
+%% :::: STOP ::::
+
+
+AlgoFlexClient(serverID,'DestroyAll');
+AlgoFlexClient(serverID,'Quit');
+
+%% PLOT TEST
+close all
+figure()
+plot3(2,5,4,'x','MarkerSize',3,'LineWidth',10)
+grid on
+hold on
+plot3(0,0,0,'o')
 
