@@ -45,7 +45,7 @@ title('G_{room}')
 xlabel('frekvens i Hz')
 grid on
 
-%h_room10ms=h_room(round(0.0116*fs):round(0.0216*fs));
+h_room10ms=h_room(round(0.0116*fs):round(0.0216*fs));
 
 %% TF decomposition
 close all, clc
@@ -220,7 +220,7 @@ grid on
 title('LPC order=12')
 semilogx(f10ms,10*log10(abs(G_room10ms)),'b')
 axis(akser)
-legend('Raw invers filter','LPC estimated filter')
+legend('LPC estimated filter','Raw invers filter')
 
 
 
