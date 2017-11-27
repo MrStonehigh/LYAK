@@ -73,7 +73,7 @@ handles.PosY = 0;
 handles.PosZ = 0;
 handles.DistanceL = 1;
 handles.DistanceR = 1;
-handles.headsize = .24;
+handles.headsize = 24;
 handles.c=344; %Sound velocity
 handles.TdelayL = 0;
 handles.TdelayR = 0;
@@ -123,15 +123,15 @@ global Room;
 set(Room.ph,'xdata',handles.PosX);
 set(Room.ph,'ydata',handles.PosY);
 set(Room.ph,'zdata',handles.PosZ);
-handles.DistanceL = sqrt((handles.PosX^2)+(handles.PosY-handles.headsize/2)^2+handles.PosZ^2)
-handles.DistanceR = sqrt((handles.PosX^2)+(handles.PosY+handles.headsize/2)^2+handles.PosZ^2)
+handles.DistanceL = sqrt((handles.PosX^2)+(handles.PosY+handles.headsize/2)^2+handles.PosZ^2)
+handles.DistanceR = sqrt((handles.PosX^2)+(handles.PosY-handles.headsize/2)^2+handles.PosZ^2)
 handles.TdelayL = handles.DistanceL/handles.c
 handles.TdelayR = handles.DistanceR/handles.c
 handles.SampDelayL = round(handles.fs*((handles.TdelayL)))
 handles.SampDelayR = round(handles.fs*((handles.TdelayR)))
 
-AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
-AlgoFlexClient(handles.serverID,'SetData',handles.idDelayL,'DelayTime',handles.TdelayL);
+AlgoFlexClient(handles.serverID,'SetData',idDelayR,'DelayTime',handles.TdelayR);
+AlgoFlexClient(handles.serverID,'SetData',idDelayL,'DelayTime',handles.TdelayL);
 
 
 % Update handles structure
@@ -188,13 +188,13 @@ AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'CurPosRate',1);
 AlgoFlexClient(handles.serverID,'GetData',idFilePlay,'FileSize');
 
 % Delays
-[handles.idDelayL handles.nameDelayL] = AlgoFlexClient(handles.serverID,'Create','Delay',1,1);
+[idDelayL nameDelayL] = AlgoFlexClient(handles.serverID,'Create','Delay',1,1);
 AlgoFlexClient(handles.serverID,'Help','Delay');
-AlgoFlexClient(handles.serverID,'SetData',handles.idDelayL,'DelayTime',handles.TdelayL);
+AlgoFlexClient(handles.serverID,'SetData',idDelayL,'DelayTime',handles.TdelayL);
 
-[handles.idDelayR handles.nameDelayR] = AlgoFlexClient(handles.serverID,'Create','Delay',1,1);
+[idDelayR nameDelayR] = AlgoFlexClient(handles.serverID,'Create','Delay',1,1);
 AlgoFlexClient(handles.serverID,'Help','Delay');
-AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
+AlgoFlexClient(handles.serverID,'SetData',idDelayR,'DelayTime',handles.TdelayR);
 
 [idProd nameProd] = AlgoFlexClient(handles.serverID,'Create','Prod',2,1);
 AlgoFlexClient(handles.serverID,'SetData',idProd,'Mode','Numerical');
@@ -209,15 +209,15 @@ AlgoFlexClient(handles.serverID,'Help','Prod')
 %AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, [1 2],idAudioOut,[1 2]);
 
 % Music to delay
-AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,handles.idDelayL,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,handles.idDelayR,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,idDelayL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,idDelayR,1);
 
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,idAudioOut,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,idAudioOut,2);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idDelayL, 1,idAudioOut,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idDelayR, 1,idAudioOut,2);
 
 
 % :::: Set Exe sequence ::::::
-AlgoFlexClient(handles.serverID,'SetExeSeq',[idFilePlay handles.idDelayL handles.idDelayR idAudioOut]);
+AlgoFlexClient(handles.serverID,'SetExeSeq',[idFilePlay idDelayL idDelayR idAudioOut]);
 
 
 % :::: start ::::::::
