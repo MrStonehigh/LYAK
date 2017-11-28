@@ -46,8 +46,8 @@ disp(azi)
 end
 disp('Im out!')
 azi=azi-1
-    L0=uiimport(fileL);
-    R0=uiimport(fileR);
+    L0=importdata(fileL);
+    R0=importdata(fileR);
     
 %%
 
@@ -209,3 +209,102 @@ grid on
 hold on
 plot3(0,0,0,'o')
 
+%% IID under test
+clc, close all, clear all
+
+phi = 0:.04:360-.04;
+f = 1000:1:10000-1;
+beta=2*344/0.24;
+
+IID = 1+((f/1000).^0.8).*(sin(phi));
+HL = ((1+cos(phi+pi/2)).*f+beta)./(f+beta);
+HR = ((1+cos(phi-pi/2)).*f+beta)./(f+beta);
+
+figure()
+plot3(f,phi,HL)
+grid on
+
+figure()
+plot3(f,phi,IID)
+grid on
+xlabel('frekvens')
+ylabel('vinkel')
+zlabel('IID')
+
+%%
+
+figure()
+subplot(2,1,1)
+plot(f,IID)
+xlabel('Frekvens')
+grid on
+subplot(2,1,2)
+plot(phi,IID)
+xlabel('Vinkel')
+grid on
+
+f=6000;
+IID = 1+((f/1000).^0.8).*(sin(phi));
+phi=-70
+IIDL = 1+((f/1000)^0.8)*(sin(phi))
+IIDR = 1+((f/1000)^0.8)*(sin(360-phi))
+
+beta=2*344/0.24;
+HL = ((1+cos(phi+pi/2))*f+beta)/(f+beta)
+HR = ((1+cos(phi-pi/2))*f+beta)/(f+beta)
+
+
+
+IIDsum=IIDL+IIDR
+
+figure()
+plot(phi,IID)
+grid on
+
+fftIID = fft(IID);
+figure()
+semilogx(f,10*log(abs(fftIID)))
+
+close all
+
+%%
+clc, close all, clear all
+f = 1:1:20000;
+phi=85;
+beta=2*344/0.24;
+IID = 1+((f/1000).^0.8)*(sin(phi));
+ss=['0' '10']
+figure()
+
+for i=180:-60:-180
+   HL = ((1+cos(i+pi/2)).*f+beta)./(f+beta);
+
+plot(f,HL)
+grid on
+hold all
+legend('180', '120','60','0','-60','-120','-180')
+end
+
+HcL = coeffs(HL)
+
+%% degree
+clc
+X=1
+Y=0
+vinkel=acosd( dot([X Y], [1 0] ) / (length([X Y]) * length([1 0 ])))
+
+%%
+clc
+eleArr=[-40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90];
+x=-32
+
+y=round(x/10)*10
+
+yind = y/10 + 5
+eleArr(yind)
+
+%%
+x=randn(1,12)';
+y=cell(1,2,1)
+
+yy = [cell(x,1) cell(x,2)]
