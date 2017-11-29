@@ -308,3 +308,59 @@ x=randn(1,12)';
 y=cell(1,2,1)
 
 yy = [cell(x,1) cell(x,2)]
+
+%%
+clc, clear all
+S1 = load('HRTF\10secBeat.mat');
+HL = importdata('HRTF\full\elev0\L0e000a.wav');
+S1H = conv(S1.playdata(:,1)',HL.data');
+% soundsc(S1.playdata(:,1),48000)
+% soundsc(S1H,48000)
+
+figure()
+subplot(3,1,1)
+plot(HL.data)
+grid on
+subplot(3,1,2)
+plot(S1.playdata(:,1))
+grid on
+subplot(3,1,3)
+plot(S1H)
+grid on
+disp(HL.data)
+
+%% MatRecData
+close all
+ 
+ fs=48000;
+ t=0:1/fs:10-1/fs;
+
+figure()
+subplot(4,1,1)
+plot(t,MatRecData(:,1))
+grid on
+title('MatPlayer output')
+subplot(4,1,2)
+plot(t,MatRecData(:,2))
+grid on
+title('ConvL output')
+subplot(4,1,3)
+plot(t,MatRecData(:,3))
+grid on
+title('DelayL output')
+subplot(4,1,4)
+plot(MatRecDataFil)
+grid on
+title('HRTF Filter taps')
+ylim([-1 2])
+
+%%
+fs=48000;
+t=0:1/fs:(10*1/400)-1/fs;
+S400 = [sin(400*2*pi*t);sin(400*2*pi*t)]';
+figure()
+plot(t,S400)
+
+save('HRTF\S400','S400')
+
+

@@ -22,7 +22,7 @@ function varargout = HRTF_GUI(varargin)
 
 % Edit the above text to modify the response to help HRTF_GUI
 
-% Last Modified by GUIDE v2.5 15-Nov-2017 12:08:46
+% Last Modified by GUIDE v2.5 29-Nov-2017 13:17:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -67,7 +67,9 @@ handles.serverID = 0;
 handles.fs = 48000; 
 handles.rectime = 10;
 handles.sampno = 0;
-handles.playbackFile = 'HRTF\Nirvana.wav';
+handles.playbackFile = importdata('HRTF\10secBeat.mat');
+%handles.playbackFile = importdata('HRTF\S400.mat');
+%handles.playbackFile = handles.playbackFile2.playdata 
 handles.PosX = 1;
 handles.PosY = 0;
 handles.PosZ = 0;
@@ -77,10 +79,16 @@ handles.headsize = .24;
 handles.c=344; %Sound velocity
 handles.TdelayL = 0;
 handles.TdelayR = 0;
+% handles.azimuthBox = '0';
+% handles.elevationBox = '0';
 handles.azi = 0;
 handles.ele = 0;
-handles.hrtfL = [ones(1,100)]';
-handles.hrtfR = [ones(1,100)]';
+handles.hrtfL = [zeros(512,1)]';
+handles.hrtfR = [zeros(512,1)]';
+handles.lengthHrtfL = 512;
+handles.lengthHrtfR = 512;
+handles.SPLL = 6;
+handles.SPLR = 6;
 
 
 
@@ -88,17 +96,21 @@ set(handles.PosXBox,'String',num2str(handles.PosX));
 set(handles.PosYBox,'String',num2str(handles.PosY));
 set(handles.PosZBox,'String',num2str(handles.PosZ));
 
+
+
 % Plot
 
 Room.ax = axes('box','on','units','norm','pos',[0.5 0.1 0.45 0.85]);
 Room.ph = plot3(handles.PosX,handles.PosY,handles.PosZ,'x','MarkerSize',3,'LineWidth',8);
 grid on
+%grid minor
 xlabel('X')
 ylabel('Y')
 zlabel('Z')
+axis([(-handles.DistanceL*2) (handles.DistanceL*2) (-handles.DistanceL*2) (handles.DistanceL*2) (-handles.DistanceL*2) (handles.DistanceL*2)])
 hold on
 plot3(0,0,0,'or','MarkerSize',3,'LineWidth',8);
-plot3([0 0.1],[0 0],[0 0],'o--r','MarkerSize',3,'LineWidth',2);
+plot3([0 0.9],[0 0],[0 0],'o--r','MarkerSize',3,'LineWidth',2);
 legend('Source','Listener','Location','East')
 
 % Update handles structure
@@ -124,10 +136,7 @@ function SetPosition_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global Room;
-set(Room.ph,'xdata',handles.PosX);
-set(Room.ph,'ydata',handles.PosY);
-set(Room.ph,'zdata',handles.PosZ);
+
 handles.DistanceL = sqrt((handles.PosX^2)+(handles.PosY-handles.headsize/2)^2+handles.PosZ^2)
 handles.DistanceR = sqrt((handles.PosX^2)+(handles.PosY+handles.headsize/2)^2+handles.PosZ^2)
 handles.TdelayL = handles.DistanceL/handles.c
@@ -138,7 +147,23 @@ handles.SampDelayR = round(handles.fs*((handles.TdelayR)))
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayL,'DelayTime',handles.TdelayL);
 
-%handles.azi = asin( (handles.PosY * asin(90)) / sqrt(handles.PosY^2 + handles.PosX^2) )
+refSPL = 6;
+refDist = 1;
+handles.SPLL = 20*log10(1/handles.DistanceL)+refSPL;
+handles.SPLR =  (handles.SPLL * (handles.DistanceL/handles.DistanceR));
+
+set(handles.DistanceBox,'string',num2str(handles.DistanceL));
+
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainL,'GainDb',handles.SPLL);
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainR,'GainDb',handles.SPLR);
+
+%handles.azimuthBox = asin( (handles.PosY * asin(90)) / sqrt(handles.PosY^2 + handles.PosX^2) )
+Roomskalar = 1.5;
+global Room;
+set(Room.ph,'xdata',handles.PosX);
+set(Room.ph,'ydata',handles.PosY);
+set(Room.ph,'zdata',handles.PosZ);
+axis([(-handles.DistanceL*Roomskalar) (handles.DistanceL*Roomskalar) (-handles.DistanceL*Roomskalar) (handles.DistanceL*Roomskalar) (-handles.DistanceL*Roomskalar) (handles.DistanceL*Roomskalar)])
 
 
 handles.azi =acosd( dot([handles.PosX handles.PosY], [1 0] ) / (norm([handles.PosX handles.PosY]) * norm([1 0 ])))
@@ -157,17 +182,21 @@ if (handles.PosX == 0 && handles.PosY == 0)
     handles.ele = 0
 end
 
-get_HRTF(handles.azi,handles.ele);
-
+get_HRTF(handles.azi,handles.ele,hObject, eventdata, handles);
+% disp('VIEWING HANDLES.HRTFL AGAIN:')
+% disp(handles.hrtfL)
 
 % Update handles structure
-guidata(hObject, handles);
+guidata(hObject,handles);
 
-function get_HRTF(azi,ele)
+function get_HRTF(azi,ele,hObject, eventdata, handles)
 % hObject    handle to PosZBox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+if(azi<0)
+    azi = 360+azi;
+end
 
 eleArr=[-40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90];
 
@@ -182,7 +211,7 @@ if (ele > 90)
 end
 
 eleInd= ele/10 + 5;
-eleFil=['elev' int2str(eleArr(eleInd))]
+eleFil=['elev' int2str(eleArr(eleInd))];
 %radii=4;
 fileL='';
 fileR='';
@@ -192,23 +221,23 @@ fileR='';
    cd 'C:\Users\Laste\Documents\Github\LYAK\AUTE'
     disp('Directory changed')
 
-while ((exist(fileL,'file') ~= 2) && (exist(fileR,'file') ~= 2))
+while ((exist(fileL,'file') ~= 2) && (exist(fileR,'file') ~= 2));
  
     if(azi==0)
-hrtfL=['R' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav']
-hrtfR=['R' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav']
-    else if(azi<10)
-hrtfL=['R' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav']
-hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(360-azi) 'a.wav']
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav'];
+        else if(azi<10)
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e00' int2str(azi) 'a.wav'];
 else if(azi<100&&azi>9)
-hrtfL=['R' int2str(eleArr(eleInd)) 'e0' int2str(azi) 'a.wav']
-hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(360-azi) 'a.wav']
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e0' int2str(azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e0' int2str(azi) 'a.wav'];
 else if(azi>99&&azi<260)
-     hrtfL=['R' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav']
-hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(360-azi) 'a.wav'] 
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav'] ;
     else if(azi>259)
-        hrtfL=['R' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav']
-hrtfR=['R' int2str(eleArr(eleInd)) 'e0' int2str(360-azi) 'a.wav']     
+        hrtfL=['L' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav'];
+        hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(azi) 'a.wav']    ; 
         end
     end
     end
@@ -216,22 +245,43 @@ hrtfR=['R' int2str(eleArr(eleInd)) 'e0' int2str(360-azi) 'a.wav']
  end
 fileL=fullfile('HRTF','full',eleFil,hrtfL)
 fileR=fullfile('HRTF','full',eleFil,hrtfR)
-exist(fileL,'file')
-if(azi==360)
+exist(fileL,'file');
+if(azi==360 || azi>360)
     azi=0;
 else
     azi=azi+1;
 end
-disp(azi)
+disp(azi);
 end
 azi=azi-1;
 disp('Im out!')
 
-left = importdata(fileL)
-right = importdata(fileR)
+set(handles.azimuthBox,'string',num2str(azi));
+set(handles.elevationBox,'string',num2str(ele));
 
-handles.hrtfL = left.data;
-handles.hrtfR = right.data;
+
+left = importdata(fileL);
+right = importdata(fileR);
+disp(left)
+handles.hrtfL = left.data';
+handles.hrtfR = right.data';
+disp('VIEWING HANDLES.HRTFL:')
+disp(handles.hrtfL)
+handles.lengthHrtfL = length(left.data)
+handles.lengthHrtfR = length(right.data)
+
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxLength',handles.lengthHrtfL);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxCoef',handles.hrtfL);
+
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxLength',handles.lengthHrtfR);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxCoef',handles.hrtfR);
+
+
+
+
+% Update handles structure
+guidata(hObject,handles);
+
 
 
 
@@ -251,15 +301,38 @@ ServerIpName = 'localhost';
 handles.serverID = AlgoFlexClient('OpenServCon',ServerIpName,4242);
 
 
+set(handles.azimuthBox,'string',num2str(handles.azi));
+set(handles.elevationBox,'string',num2str(handles.ele));
+set(handles.DistanceBox,'string',num2str(handles.DistanceL));
+
 AlgoFlexClient(handles.serverID,'SetSampleRate',handles.fs);
 
-[idMatPlayer nameMatPlayer] = AlgoFlexClient(handles.serverID,'Create', 'MatrixPlayer',0,1);
+[handles.idMatPlayer handles.nameMatPlayer] = AlgoFlexClient(handles.serverID,'Create', 'MatrixPlayer',0,2);
+AlgoFlexClient(handles.serverID,'Help','MatrixPlayer')
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'Samples',handles.playbackFile);
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'PlaybackMode','repeat');
+
+
 
 handles.rectime=10;      %Recording time for MatrixRecorder in sec
 handles.sampno=handles.fs*handles.rectime;
-[idMatRec nameMatRec] = AlgoFlexClient(handles.serverID,'Create','MatrixRecorder',1,0);
+[handles.idMatRec handles.nameMatRec] = AlgoFlexClient(handles.serverID,'Create','MatrixRecorder',8,0);
+AlgoFlexClient(handles.serverID,'Help','MatrixRecorder')
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRec,'SamplesToRecord',handles.fs*10);
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRec,'RecordMode','repeat');
 
-[idGain nameGain] = AlgoFlexClient(handles.serverID,'Create','Gain',1,1);
+[handles.idMatRecFil handles.nameMatRecFil] = AlgoFlexClient(handles.serverID,'Create','MatrixRecorder',2,0);
+AlgoFlexClient(handles.serverID,'Help','MatrixRecorder');
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRecFil,'SamplesToRecord',1024);
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRecFil,'RecordMode','repeat');
+
+[handles.idGainL handles.nameGainL] = AlgoFlexClient(handles.serverID,'Create','Gain',1,1);
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainL,'GainDb',handles.SPLL);
+AlgoFlexClient(handles.serverID,'Help','Gain')
+[handles.idGainR handles.nameGainR] = AlgoFlexClient(handles.serverID,'Create','Gain',1,1);
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainR,'GainDb',handles.SPLR);
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainL,'GLD_GainFactor',{'Linear','1','1e-6'});
+AlgoFlexClient(handles.serverID,'SetData',handles.idGainR,'GLD_GainFactor',{'Linear','1','1e-6'});
 
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idMatPlayer,1,idGain,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idGain,1,idMatRec,1);
@@ -267,7 +340,7 @@ handles.sampno=handles.fs*handles.rectime;
 % Audiostream OUT
 [idAudioOut nameAudioOut]=AlgoFlexClient(handles.serverID,'Create','AudioStream',2,0);
 AlgoFlexClient(handles.serverID,'Help','AudioStream');
-AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'Capabilities')
+AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'Capabilities');
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'Device','Primary Sound Driver');
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'BufferSize',1024);
 
@@ -277,31 +350,40 @@ AlgoFlexClient(handles.serverID,'Help','AudioStream');
 AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
 AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
 AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',1024);
+AlgoFlexClient(handles.serverID,'Help','FFT');
 
-[idConvL nameConvL]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
-AlgoFlexClient(handles.serverID,'SetData',idConvL,'CompleteSetup',[num2cell(handles.hrtfL) num2cell(size(handles.hrtfL)) num2cell(1)]);
-[idConvR nameConvR]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
-AlgoFlexClient(handles.serverID,'SetData',idConvR,'CompleteSetup',cell(handles.hrtfR,1,1));
-AlgoFlexClient(handles.serverID,'Help','FastConv')
+% [idConvL nameConvL]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
+% AlgoFlexClient(handles.serverID,'SetData',idConvL,'CompleteSetup',[num2cell(handles.hrtfL) num2cell((handles.hrtfL)) num2cell(2)]);
+% [idConvR nameConvR]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
+% AlgoFlexClient(handles.serverID,'SetData',idConvR,'CompleteSetup',cell(handles.hrtfR,1,1));
+% AlgoFlexClient(handles.serverID,'Help','FastConv')
 
-[idFilePlay nameFilePlay]=AlgoFlexClient(handles.serverID,'Create','FilePlayer',0,2);
-AlgoFlexClient(handles.serverID,'Help','FilePlayer');
-AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'InputFileName',handles.playbackFile);
-AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'PlayMode','whole');
-AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'BufferSize',1024);
-AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'CurPosRate',1);
-AlgoFlexClient(handles.serverID,'GetData',idFilePlay,'FileSize');
+[handles.idConvL handles.nameConvL]=AlgoFlexClient(handles.serverID,'Create','Fx',1,2);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxLength',handles.lengthHrtfL);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxCoef',handles.hrtfL);
 
-[idhrtfR namehrtfR]=AlgoFlexClient(handles.serverID,'Create','MatrixPlayer',0,1);
-AlgoFlexClient(handles.serverID,'Help','MatrixPlayer');
-AlgoFlexClient(handles.serverID,'SetData',idhrtfR,'Samples',handles.hrtfR);
-AlgoFlexClient(handles.serverID,'SetData',idhrtfR,'PlaybackMode','repeat');
+[handles.idConvR handles.nameConvR]=AlgoFlexClient(handles.serverID,'Create','Fx',1,2);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxLength',handles.lengthHrtfR);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxCoef',handles.hrtfR);
 
+% [idFilePlay nameFilePlay]=AlgoFlexClient(handles.serverID,'Create','FilePlayer',0,2);
+% AlgoFlexClient(handles.serverID,'Help','FilePlayer')
+% AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'InputFileName',handles.playbackFile);
+% AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'PlayMode','whole');
+% AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'BufferSize',1024);
+% AlgoFlexClient(handles.serverID,'SetData',idFilePlay,'CurPosRate',1);
+% AlgoFlexClient(handles.serverID,'GetData',idFilePlay,'FileSize');
 
-[idhrtfL namehrtfL]=AlgoFlexClient(handles.serverID,'Create','MatrixPlayer',0,1);
-AlgoFlexClient(handles.serverID,'Help','FilePlayer');
-AlgoFlexClient(handles.serverID,'SetData',idhrtfL,'Samples',handles.hrtfL);
-AlgoFlexClient(handles.serverID,'SetData',idhrtfL,'PlaybackMode','repeat');
+% [idhrtfR namehrtfR]=AlgoFlexClient(handles.serverID,'Create','MatrixPlayer',0,1);
+% AlgoFlexClient(handles.serverID,'Help','MatrixPlayer');
+% AlgoFlexClient(handles.serverID,'SetData',idhrtfR,'Samples',handles.hrtfR);
+% AlgoFlexClient(handles.serverID,'SetData',idhrtfR,'PlaybackMode','repeat');
+% 
+% 
+% [idhrtfL namehrtfL]=AlgoFlexClient(handles.serverID,'Create','MatrixPlayer',0,1);
+% AlgoFlexClient(handles.serverID,'Help','FilePlayer');
+% AlgoFlexClient(handles.serverID,'SetData',idhrtfL,'Samples',handles.hrtfL);
+% AlgoFlexClient(handles.serverID,'SetData',idhrtfL,'PlaybackMode','repeat');
 
 
 % Delays
@@ -313,9 +395,10 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idDelayL,'DelayTime',handles.T
 AlgoFlexClient(handles.serverID,'Help','Delay');
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
 
+
 [idProd nameProd] = AlgoFlexClient(handles.serverID,'Create','Prod',2,1);
 AlgoFlexClient(handles.serverID,'SetData',idProd,'Mode','Numerical');
-AlgoFlexClient(handles.serverID,'Help','ParmProdSum')
+AlgoFlexClient(handles.serverID,'Help','ParmProdSum');
 %AlgoFlexClient(serverID,'SetData',idProd,'ParmX1',IID_L)
 %AlgoFlexClient(serverID,'SetData',idProd,'ParmX2','Prod')
 
@@ -326,37 +409,102 @@ AlgoFlexClient(handles.serverID,'Help','ParmProdSum')
 %AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, [1 2],idAudioOut,[1 2]);
 
 % Music to delay
-AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,handles.idDelayL,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,handles.idDelayR,1);
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,handles.idDelayL,1);
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,handles.idDelayR,1);
+
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 1,handles.idDelayL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 2,handles.idDelayR,1);
 
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,idAudioOut,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,idAudioOut,2);
 
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,idConvL,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,idConvR,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,handles.idGainL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,handles.idGainR,1);
 
-AlgoFlexClient(handles.serverID,'ConnectAudio',idhrtfL, 1,idConvL,2);
-AlgoFlexClient(handles.serverID,'ConnectAudio',idhrtfR, 1,idConvR,2);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idGainL, 1,handles.idConvL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idGainR, 1,handles.idConvR,1);
 
-AlgoFlexClient(handles.serverID,'ConnectAudio',idConvL, 1,idAudioOut,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',idConvR, 1,idAudioOut,2);
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idhrtfL, 1,idConvL,2);
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idhrtfR, 1,idConvR,2);
+
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvL, 1,idAudioOut,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvR, 1,idAudioOut,2);
+
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer,1,handles.idMatRec,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer,2,handles.idMatRec,2);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL,1,handles.idMatRec,3);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR,1,handles.idMatRec,4);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idGainL,1,handles.idMatRec,5);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idGainR,1,handles.idMatRec,6);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvL,1,handles.idMatRec,7);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvR,1,handles.idMatRec,8);
+
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvL,2,handles.idMatRecFil,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvR,2,handles.idMatRecFil,2);
+
 
 % :::: Set Exe sequence ::::::
-AlgoFlexClient(handles.serverID,'SetExeSeq',[idFilePlay handles.idDelayL handles.idDelayR idhrtfL idhrtfR idConvL idConvR idAudioOut]);
+AlgoFlexClient(handles.serverID,'SetExeSeq',[handles.idMatRec handles.idMatRecFil handles.idMatPlayer handles.idDelayL handles.idDelayR handles.idGainL handles.idGainR handles.idConvL handles.idConvR idAudioOut]);
 
 
 % :::: start ::::::::
 AlgoFlexClient(handles.serverID,'SetSampleRate',handles.fs);
 AlgoFlexClient(handles.serverID,'MultiStart');
+
+
+
 guidata(hObject,handles)
 
+function DataAnalysis(MatRecData)
+close all
+ 
+ fs=48000;
+ t=0:1/fs:10-1/fs;
+
+figure()
+subplot(4,1,1)
+plot(t,MatRecData(:,1),'b',t,MatRecData(:,2),'r')
+grid on
+title('MatPlayer output')
+legend('Left ear','Rigth ear')
+subplot(4,1,2)
+plot(t,MatRecData(:,3),'b',t,MatRecData(:,4),'r')
+grid on
+title('ITD output')
+subplot(4,1,3)
+plot(t,MatRecData(:,5),'b',t,MatRecData(:,6),'r')
+grid on
+title('Gain output')
+subplot(4,1,4)
+plot(t,MatRecData(:,7),'b',t,MatRecData(:,8),'r')
+grid on
+title('HRTF output')
+
+
+plot(MatRecDataFil)
+grid on
+title('HRTF Filter taps')
+ylim([-1 2])
 
 % --- Executes on button press in pushbutton3.
 function STOP_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'PlaybackMode','standby');
+AlgoFlexClient(handles.serverID,'Help','MatrixRecorder');
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRec,'RecordMode','standby');
+AlgoFlexClient(handles.serverID,'SetData',handles.idMatRecFil,'RecordMode','standby');
+
 AlgoFlexClient(handles.serverID,'Stop');
+
+DataAnalysis(MatRecData);
+
+MatRecData = AlgoFlexClient(handles.serverID,'GetData',handles.idMatRec,'Samples');
+MatRecDataFil = AlgoFlexClient(handles.serverID,'GetData',handles.idMatRecFil,'Samples');
+    save('Test.mat','MatRecData','MatRecDataFil');
+    
+    
 
 AlgoFlexClient(handles.serverID,'DestroyAll');
 AlgoFlexClient(handles.serverID,'Quit');
