@@ -1,8 +1,10 @@
 \documentclass[a4paper,11pt,fleqn,oneside,openright]{memoir} 	% Openright aabner kapitler paa hoejresider (openany begge)
 
 %%%% PACKAGES %%%%
-\usepackage{multicol}
-\usepackage{graphicx}
+
+%% Appendix package
+\usepackage{appendix}
+\usepackage{subcaption}
 % ¤¤ Oversaettelse og tegnsaetning ¤¤ %
 \usepackage[utf8]{inputenc}					% Input-indkodning af tegnsaet (UTF8)
 \usepackage[danish]{babel}					% Dokumentets sprog
@@ -15,6 +17,10 @@
 \setaftersecskip{25pt}
 \setbeforesecskip{1ex}
 \setaftersecskip{1ex}
+
+\usepackage{scrextend}
+\addtokomafont{labelinglabel}{\sffamily}
+\renewcommand{\familydefault}{pbk}			% DET ER HER JEG PILLER VED FONT, LASSE!!
 																		
 % ¤¤ Figurer og tabeller (floats) ¤¤ %
 \usepackage{graphicx} 						% Haandtering af eksterne billeder (JPG, PNG, PDF)
@@ -50,9 +56,9 @@
 
 % ¤¤ Referencer og kilder ¤¤ %
 \usepackage[danish]{varioref}				% Muliggoer bl.a. krydshenvisninger med sidetal (\vref)
-\usepackage[authoryear]{natbib}							% Udvidelse med naturvidenskabelige citationsmodeller
-\bibliographystyle{plainnat}					% Referencestilen. kan bruges: abbrvnat, ksfh_nat, plain
-%\usepackage{citeref}
+\usepackage{natbib}							% Udvidelse med naturvidenskabelige citationsmodeller
+%\bibliographystyle{plain}					% Referencestilen. kan bruges: abbrvnat, ksfh_nat, plain
+%\usepackage{cite}
 %\usepackage{citeall}
 %\setcitestyle{longnamefirst,open={((},close={))}}
 %\usepackage{xr}
@@ -123,7 +129,7 @@
 \captiontitlefont{\small}					% Opsaetning af nummerering
 \captiondelim{. }							% Seperator mellem nummerering og figurtekst
 \hangcaption								% Venstrejusterer flere-liniers figurtekst under hinanden
-\captionwidth{\linewidth}					% Bredden af figurteksten
+%\captionwidth{\linewidth}					% Bredden af figurteksten												GIVER PROBLEMER I SUBFIGURES!!! MEN FJERNE FED FIGURTEKST!!
 \setlength{\belowcaptionskip}{0pt}			% Afstand under figurteksten
 		
 % ¤¤ Opsaetning af listings ¤¤ %
@@ -196,9 +202,37 @@
   }
 }											% ... her
 
-\chapterstyle{jenor}						% Valg af kapiteludseende - Google 'memoir chapter styles' for alternativer
-
+\chapterstyle{madsen}						% Valg af kapiteludseende - Google 'memoir chapter styles' for alternativer: jenor, lyhne, madsen, petersen\
 % ¤¤ Sidehoved ¤¤ %
+
+%Section udseende
+\usepackage{xcolor}
+\usepackage[explicit]{titlesec}
+
+%Setting section title bg color
+\definecolor{redbg}{RGB}{0, 158, 223}
+%Setting subsection and subsubsection title color
+\definecolor{red}{RGB}{0, 0, 0}
+
+%\titleformat{\chapter}[shape]{\normalfont\Huge <bfseries}{}{0em}{before-code}[after-code]
+
+
+\titleformat{\section}
+%{\normalfont\LARGE\bfseries}
+{\fontfamily{lmss}\selectfont\bfseries\Large}						% DET ER HER JEG PILLER VED SECTION FONT, LASSE!!!
+{}
+{0em}
+{\colorbox{red}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\textcolor{redbg}{\thesection\quad#1}}}}
+
+
+%Underlining ruler for subsections
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{red}}
+{\thesubsection}
+{1em}
+{#1}
+[{\titlerule[0.8pt]}]
+
 
 \makepagestyle{Uni}							% Definerer sidehoved og sidefod udseende frem til ...
 \makepsmarks{Uni}{%
@@ -235,8 +269,8 @@
 % ¤¤ Billede hack ¤¤ %										% Indsaet figurer nemt med \figur{Stoerrelse}{Fil}{Figurtekst}{Label}
 \newcommand{\figur}[4]{
 		\begin{figure}[H] \centering
-			\includegraphics[width=#1\textwidth]{billeder/#2}
-			\caption{#3}\label{#4}
+			\includegraphics[width=#1\textwidth]{All_Pics/#2}
+			\caption{#3}\label{fig:#4}
 		\end{figure} 
 }
 
@@ -244,9 +278,11 @@
 \newcommand{\decC}{^{\circ}\text{C}}
 \newcommand{\dec}{^{\circ}}
 \newcommand{\m}{\cdot}
-\usepackage{epstopdf}
+
 
 %%%% ORDDELING %%%%
 
 \hyphenation{}
+
+%\usepackage[Glenn]{fncychap}
 

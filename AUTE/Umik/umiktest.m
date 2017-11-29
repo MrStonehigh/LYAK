@@ -56,10 +56,10 @@ Leq = scalar + mag2db(mean(abs(soundfile))/dbref)
 %%  script
 close all,clc
 
-rectime = 1200; %%total rectime in sec
+rectime = 7200; %%total rectime in sec
 parttime = 10; %%partwise rectime
 LeqArray = 1:1:rectime/parttime;
-scalar = -3;
+scalar = 15;
 dbref=20e-6;
 Leq = scalar + mag2db(mean(abs(soundfile))/dbref)
 SPL = figure;
@@ -67,11 +67,16 @@ xtime = parttime:parttime:rectime;
 %plot(xtime,LegArray,'--o')
 figure(SPL)
 
+AWeighting = fdesign.audioweighting('WT,Class','A',1,48e3)
+Afilter=design(AWeighting,'ansis142','SystemObject',true')
+%A = filter(Afilter)
+
 disp('Recording initiated')
 for i=1:rectime/parttime; 
     recordblocking(Umik,parttime);
     soundfile = getaudiodata(Umik);
-    Leq = scalar + mag2db(mean(abs(soundfile))/dbref);
+    soundfile = step(Afilter,soundfile);
+    Leq = scalar + mag2db(rms(abs(soundfile))/dbref);
     LeqArray(i) = Leq(1);
     figure(SPL)
   %  plot(i*parttime,Leq,'o--b')
@@ -80,7 +85,7 @@ for i=1:rectime/parttime;
     %hold on
     if (i==1)
      xlabel('Time in sec')
-    ylabel('Leq in dB')
+    ylabel('LAeq in dB')
     grid on
     grid minor
     hold on
@@ -101,4 +106,26 @@ disp('Recording ended')
 % grid on
 % title('SPL measured in time')
     
-    
+%% Kantine date
+clc, close all
+load('kantine.mat');
+n = length(LeqArray);
+year = 2017;
+month = 11;
+day = 27;
+hour = 11;
+minutes = 20;
+seconds = 1;
+
+timx = datenum(year, month, day,hour, minutes,seconds):1:datenum(year, month, day,12, 20,seconds)
+figure()
+plot( timx,LeqArray)
+grid on
+grid minor
+dateformat = 21;
+datetick('x',dateformat);
+
+% figure()
+% plot(datetime(year,month,day,hour,minutes,seconds),LeqArray)
+% grid on
+
