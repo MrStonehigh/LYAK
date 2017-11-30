@@ -67,7 +67,8 @@ handles.serverID = 0;
 handles.fs = 48000; 
 handles.rectime = 10;
 handles.sampno = 0;
-handles.playbackFile = importdata('HRTF\10secBeat.mat');
+handles.playbackFile = importdata('HRTF\Testing.mat');
+%handles.playbackFile = importdata('HRTF\10secBeat.mat');
 %handles.playbackFile = importdata('HRTF\S400.mat');
 %handles.playbackFile = handles.playbackFile2.playdata 
 handles.PosX = 1;
@@ -87,8 +88,8 @@ handles.hrtfL = [zeros(512,1)]';
 handles.hrtfR = [zeros(512,1)]';
 handles.lengthHrtfL = 512;
 handles.lengthHrtfR = 512;
-handles.SPLL = 6;
-handles.SPLR = 6;
+handles.SPLL = -13;
+handles.SPLR = -13;
 
 
 
@@ -147,7 +148,7 @@ handles.SampDelayR = round(handles.fs*((handles.TdelayR)))
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayL,'DelayTime',handles.TdelayL);
 
-refSPL = 6;
+refSPL = -13;
 refDist = 1;
 handles.SPLL = 20*log10(1/handles.DistanceL)+refSPL;
 handles.SPLR =  (handles.SPLL * (handles.DistanceL/handles.DistanceR));
@@ -314,6 +315,7 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'PlaybackMode','re
 
 
 
+
 handles.rectime=10;      %Recording time for MatrixRecorder in sec
 handles.sampno=handles.fs*handles.rectime;
 [handles.idMatRec handles.nameMatRec] = AlgoFlexClient(handles.serverID,'Create','MatrixRecorder',8,0);
@@ -340,17 +342,23 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idGainR,'GLD_GainFactor',{'Lin
 % Audiostream OUT
 [idAudioOut nameAudioOut]=AlgoFlexClient(handles.serverID,'Create','AudioStream',2,0);
 AlgoFlexClient(handles.serverID,'Help','AudioStream');
-AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'Capabilities');
+AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'RawCapabilities')
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'Device','Primary Sound Driver');
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'BufferSize',1024);
 
 % Audiostream IN
 [idAudioIn nameAudioIn]=AlgoFlexClient(handles.serverID,'Create','AudioStream',0,2);
-AlgoFlexClient(handles.serverID,'Help','AudioStream');
+AlgoFlexClient(handles.serverID,'Help','AudioStream')
 AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
-AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
-AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',1024);
+%AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
+AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Microphone (Umik-1  Gain: 18dB  )');
+AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',3072);
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardInputs',[2 1]);
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardOutputs',[2 1]);
+
 AlgoFlexClient(handles.serverID,'Help','FFT');
+AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities')
+AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'DeviceList')
 
 % [idConvL nameConvL]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
 % AlgoFlexClient(handles.serverID,'SetData',idConvL,'CompleteSetup',[num2cell(handles.hrtfL) num2cell((handles.hrtfL)) num2cell(2)]);
@@ -411,9 +419,15 @@ AlgoFlexClient(handles.serverID,'Help','ParmProdSum');
 % Music to delay
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,handles.idDelayL,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,handles.idDelayR,1);
+% :::::::: UMIK MIC ::::::::::
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 1,handles.idDelayL,1);
+% AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 2,handles.idDelayR,1);
+% :::::::: UMIK MIC ::::::::::
 
+% :::::::: ORIGINAL ::::::::::
 AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 1,handles.idDelayL,1);
 AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 2,handles.idDelayR,1);
+% :::::::: ORIGINAL ::::::::::
 
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,idAudioOut,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,idAudioOut,2);
