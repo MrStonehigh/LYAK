@@ -363,4 +363,48 @@ plot(t,S400)
 
 save('HRTF\S400','S400')
 
+%% 
+clc, close all, clear all
 
+HL0 = importdata('HRTF\full\elev10\R10e270a.wav');
+HL10 = importdata('HRTF\full\elev10\L10e270a.wav');
+
+fs = 44100;
+N=1024;
+bin = fs/2/N;
+
+t = 0:1/fs:length(HL0.data)/fs-1/fs;
+ft = 0:bin:fs/2-bin;
+
+FHL0 = fft(HL0.data,N);
+FHL10 = fft(HL10.data,N);
+
+figure()
+subplot(2,2,1)
+plot(t,HL0.data)
+title('HRTF L0e000a')
+xlabel('Time in sec')
+ylabel('Amplitude in gg')
+ylim([-.5 .4])
+grid on
+subplot(2,2,3)
+semilogx(ft,10*log10(abs(FHL0)))
+title('HRTF L0e000a')
+xlabel('Frequency')
+ylabel('Gain in dB')
+axis([20 fs/2 -35 8])
+grid on
+subplot(2,2,2)
+plot(t,HL10.data)
+title('HRTF L10e065a')
+xlabel('Time in sec')
+ylabel('Amplitude in gg')
+ylim([-.5 .4])
+grid on
+subplot(2,2,4)
+semilogx(ft,10*log10(abs(FHL10)))
+title('HRTF L10e065a')
+xlabel('Frequency')
+ylabel('Gain in dB')
+axis([20 fs/2 -35 8])
+grid on

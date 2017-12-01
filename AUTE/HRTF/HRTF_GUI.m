@@ -76,7 +76,7 @@ handles.PosY = 0;
 handles.PosZ = 0;
 handles.DistanceL = 1;
 handles.DistanceR = 1;
-handles.headsize = .24;
+handles.headsize = .23;
 handles.c=344; %Sound velocity
 handles.TdelayL = 0;
 handles.TdelayR = 0;
@@ -170,7 +170,7 @@ axis([(-handles.DistanceL*Roomskalar) (handles.DistanceL*Roomskalar) (-handles.D
 handles.azi =acosd( dot([handles.PosX handles.PosY], [1 0] ) / (norm([handles.PosX handles.PosY]) * norm([1 0 ])))
 handles.ele =acosd( dot([handles.PosX handles.PosY handles.PosZ], [handles.PosX handles.PosY 0] ) / (norm([handles.PosX handles.PosY handles.PosZ]) * norm([handles.PosX handles.PosY 0])))
 
-if (handles.PosY < 0)
+if (handles.PosY > 0)
     handles.azi = -handles.azi
 end
 
@@ -267,9 +267,9 @@ disp(left)
 handles.hrtfL = left.data';
 handles.hrtfR = right.data';
 disp('VIEWING HANDLES.HRTFL:')
-disp(handles.hrtfL)
-handles.lengthHrtfL = length(left.data)
-handles.lengthHrtfR = length(right.data)
+disp(handles.hrtfL);
+handles.lengthHrtfL = length(left.data);
+handles.lengthHrtfR = length(right.data);
 
 AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxLength',handles.lengthHrtfL);
 AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxCoef',handles.hrtfL);
