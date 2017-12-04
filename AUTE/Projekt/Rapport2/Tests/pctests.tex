@@ -1,1 +1,13 @@
 \section{Test i realtid}
+
+Ved hjælp af MatrixRecorder-blokkene er der blevet opsamlet data fra hver blok for at få en visuel afklaring på, hvad der sker i blokken. På figur \ref{fig:blok_output} ses outputtet fra hver af blokkene, hentet fra den ene MatrixRecorder som kontinuerligt optager 10sekunder af signalet. Allerede her kan man se effekten af Gain-blokken som i dette tilfælde har skruet ned for signalet.
+
+\figur{1}{blok_output}{Output fra hver blok. Venstre og højre øre er plottet i hvert plot, med hhv blå og rød farve}{blok_output}
+
+Zoomer man ind på plottene som det er gjort på figur \ref{fig:blok_outputzoom} kan det ses at venstre og højre kanal ligger fuldstændig oveni hinanden fra udgangen af MatrixPlayeren, men efter delay-blokken er de blevet forskudt. 
+
+\figur{1}{blok_outputzoom}{Output fra hver blok zoomet. Venstre og højre øre er plottet i hvert plot, med hhv blå og rød farve}{blok_outputzoom}
+
+Ser man på outputtet fra Fx-blokken ses der - som forventet - ikke nogen tydelig ændring. Kigger man derimod på blokkens filterkoefficienter kan man se hver kanals HRTF som vist på figur \ref{fig:filtertaps}
+
+\figur{1}{filtertaps}{Fx-Blokkens filterkoefficienter}{filtertaps}

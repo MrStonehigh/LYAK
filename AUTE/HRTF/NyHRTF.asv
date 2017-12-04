@@ -355,16 +355,23 @@ title('HRTF Filter taps')
 ylim([-1 2])
 
 %%
-fs=48000;
+clc
+fs=44100;
 t=0:1/fs:(10*1/400)-1/fs;
+
+tS=0:1/fs:(10*1/400)-1/fs;
+
 S400 = [sin(400*2*pi*t);sin(400*2*pi*t)]';
+SS4=conv(HL0.data,S400(:,1))
 figure()
-plot(t,S400)
+plot(t,S400(:,1),'r')
+hold on
+plot(t,SS4(1:1102))
 
 save('HRTF\S400','S400')
 
 %% 
-clc, close all, clear all
+clc, close all, 
 
 HL0 = importdata('HRTF\full\elev10\R10e270a.wav');
 HL10 = importdata('HRTF\full\elev10\L10e270a.wav');
@@ -382,29 +389,47 @@ FHL10 = fft(HL10.data,N);
 figure()
 subplot(2,2,1)
 plot(t,HL0.data)
-title('HRTF L0e000a')
+title('a) HRTF R10e270a')
 xlabel('Time in sec')
 ylabel('Amplitude in gg')
 ylim([-.5 .4])
 grid on
 subplot(2,2,3)
 semilogx(ft,10*log10(abs(FHL0)))
-title('HRTF L0e000a')
+title('c) HRTF R10e270a')
 xlabel('Frequency')
 ylabel('Gain in dB')
 axis([20 fs/2 -35 8])
 grid on
 subplot(2,2,2)
 plot(t,HL10.data)
-title('HRTF L10e065a')
+title('b) HRTF L10e270a')
 xlabel('Time in sec')
 ylabel('Amplitude in gg')
 ylim([-.5 .4])
 grid on
 subplot(2,2,4)
 semilogx(ft,10*log10(abs(FHL10)))
-title('HRTF L10e065a')
+title('d )HRTF L10e270a')
 xlabel('Frequency')
 ylabel('Gain in dB')
 axis([20 fs/2 -35 8])
 grid on
+
+%%
+fs=44100;
+Rdel = 0.001202; %sek
+Ldel = 0.0005215; %sek
+
+RdelS = Rdel*fs;
+LdelS = Ldel*fs;
+
+diff = Rdel-Ldel
+headR = 344 * diff
+
+%%
+clc
+DelL=sqrt(((0-0)^2)+((1-(.23/2))^2)+((0.5-0)^2))
+DelR=sqrt(((0-0)^2)+((1-(-(.23/2)))^2)+((0.5-0)^2))
+diff = DelL-DelR
+diff/344

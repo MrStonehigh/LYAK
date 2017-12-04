@@ -183,14 +183,103 @@ if (handles.PosX == 0 && handles.PosY == 0)
     handles.ele = 0
 end
 
-get_HRTF(handles.azi,handles.ele,hObject, eventdata, handles);
+
+
+if(handles.azi<0)
+    handles.azi = 360+handles.azi;
+end
+
+eleArr=[-40 -30 -20 -10 0 10 20 30 40 50 60 70 80 90];
+
+handles.ele = round(handles.ele/10)*10;
+
+if(handles.ele < -40)
+    handles.ele = -40
+end
+
+if (handles.ele > 90)
+    handles.ele = 90
+end
+
+eleInd= handles.ele/10 + 5;
+eleFil=['elev' int2str(eleArr(eleInd))];
+%radii=4;
+fileL='';
+fileR='';
+
+
+   % cd 'C:\Users\Laste\Documents\MATLAB'
+   cd 'C:\Users\Laste\Documents\Github\LYAK\AUTE'
+    disp('Directory changed')
+
+while ((exist(fileL,'file') ~= 2) && (exist(fileR,'file') ~= 2));
+ 
+    if(handles.azi==0)
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e00' int2str(handles.azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e00' int2str(handles.azi) 'a.wav'];
+        else if(handles.azi<10)
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e00' int2str(handles.azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e00' int2str(handles.azi) 'a.wav'];
+else if(handles.azi<100&&handles.azi>9)
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e0' int2str(handles.azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e0' int2str(handles.azi) 'a.wav'];
+else if(handles.azi>99&&handles.azi<260)
+    hrtfL=['L' int2str(eleArr(eleInd)) 'e' int2str(handles.azi) 'a.wav'];
+    hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(handles.azi) 'a.wav'] ;
+    else if(handles.azi>259)
+        hrtfL=['L' int2str(eleArr(eleInd)) 'e' int2str(handles.azi) 'a.wav'];
+        hrtfR=['R' int2str(eleArr(eleInd)) 'e' int2str(handles.azi) 'a.wav']    ; 
+        end
+    end
+    end
+    end
+ end
+fileL=fullfile('HRTF','full',eleFil,hrtfL)
+fileR=fullfile('HRTF','full',eleFil,hrtfR)
+exist(fileL,'file');
+if(handles.azi==360 || handles.azi>360)
+    handles.azi=0;
+else
+    handles.azi=handles.azi+1;
+end
+disp(handles.azi);
+end
+handles.azi=handles.azi-1;
+disp('Im out!')
+
+set(handles.azimuthBox,'string',num2str(handles.azi));
+set(handles.elevationBox,'string',num2str(handles.ele));
+
+
+
+
+left = importdata(fileL);
+right = importdata(fileR);
+disp(left)
+handles.hrtfL = left.data';
+handles.hrtfR = right.data';
+disp('VIEWING HANDLES.HRTFL:')
+disp(handles.hrtfL);
+handles.lengthHrtfL = length(left.data);
+handles.lengthHrtfR = length(right.data);
+
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxLength',handles.lengthHrtfL);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvL,'FxCoef',handles.hrtfL);
+
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxLength',handles.lengthHrtfR);
+AlgoFlexClient(handles.serverID,'SetData',handles.idConvR,'FxCoef',handles.hrtfR);
+
+
+
+
+%getHRTF_Callback(handles.azi,handles.ele,hObject, eventdata, handles);
 % disp('VIEWING HANDLES.HRTFL AGAIN:')
 % disp(handles.hrtfL)
 
 % Update handles structure
 guidata(hObject,handles);
 
-function get_HRTF(azi,ele,hObject, eventdata, handles)
+function getHRTF_Callback(azi,ele,hObject, eventdata, handles)
 % hObject    handle to PosZBox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -346,19 +435,20 @@ AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'RawCapabilities')
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'Device','Primary Sound Driver');
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'BufferSize',1024);
 
-% Audiostream IN
-[idAudioIn nameAudioIn]=AlgoFlexClient(handles.serverID,'Create','AudioStream',0,2);
-AlgoFlexClient(handles.serverID,'Help','AudioStream')
-AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
-%AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
-AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Microphone (Umik-1  Gain: 18dB  )');
-AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',3072);
-% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardInputs',[2 1]);
-% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardOutputs',[2 1]);
+% ::::::::: UMIK Audiostream IN:::::::::::::::::
+% [idAudioIn nameAudioIn]=AlgoFlexClient(handles.serverID,'Create','AudioStream',0,2);
+% AlgoFlexClient(handles.serverID,'Help','AudioStream')
+% AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
+% %AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Microphone (Umik-1  Gain: 18dB  )');
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',3072);
+% % AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardInputs',[2 1]);
+% % AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardOutputs',[2 1]);
+% ::::::::: UMIK Audiostream IN:::::::::::::::::
 
-AlgoFlexClient(handles.serverID,'Help','FFT');
-AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities')
-AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'DeviceList')
+% AlgoFlexClient(handles.serverID,'Help','FFT');
+% AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities')
+% AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'DeviceList')
 
 % [idConvL nameConvL]=AlgoFlexClient(handles.serverID,'Create','FastConv',2,1);
 % AlgoFlexClient(handles.serverID,'SetData',idConvL,'CompleteSetup',[num2cell(handles.hrtfL) num2cell((handles.hrtfL)) num2cell(2)]);
@@ -404,9 +494,9 @@ AlgoFlexClient(handles.serverID,'Help','Delay');
 AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.TdelayR);
 
 
-[idProd nameProd] = AlgoFlexClient(handles.serverID,'Create','Prod',2,1);
-AlgoFlexClient(handles.serverID,'SetData',idProd,'Mode','Numerical');
-AlgoFlexClient(handles.serverID,'Help','ParmProdSum');
+% [idProd nameProd] = AlgoFlexClient(handles.serverID,'Create','Prod',2,1);
+% AlgoFlexClient(handles.serverID,'SetData',idProd,'Mode','Numerical');
+% AlgoFlexClient(handles.serverID,'Help','ParmProdSum');
 %AlgoFlexClient(serverID,'SetData',idProd,'ParmX1',IID_L)
 %AlgoFlexClient(serverID,'SetData',idProd,'ParmX2','Prod')
 
@@ -476,10 +566,20 @@ function STOP_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% ::::::::::: Make AlgoFlex blockdiagram :::::::::::::
+%AlgoFlexClient(handles.serverID,'GenerateGraph',{},{},'Audio+Parms',50,'png','C:\tmp\3DAUTE_parms')
+% ::::::::::: Make AlgoFlex blockdiagram :::::::::::::
+
 AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'PlaybackMode','standby');
 AlgoFlexClient(handles.serverID,'Help','MatrixRecorder');
 AlgoFlexClient(handles.serverID,'SetData',handles.idMatRec,'RecordMode','standby');
 AlgoFlexClient(handles.serverID,'SetData',handles.idMatRecFil,'RecordMode','standby');
+
+% ::::::::::: Make AlgoFlex blockdiagram :::::::::::::
+%AlgoFlexClient(handles.serverID,'GenerateGraph',{},{},'Audio',50,'png','C:\tmp\3DAUTE_Audio')
+% ::::::::::: Make AlgoFlex blockdiagram :::::::::::::
+
 
 AlgoFlexClient(handles.serverID,'Stop');
 
@@ -511,24 +611,27 @@ legend('Left ear','Rigth ear')
 subplot(4,1,2)
 plot(t,MatRecData(:,3),'b',t,MatRecData(:,4),'r')
 grid on
-title('ITD output')
+title('Delay output')
 subplot(4,1,3)
 plot(t,MatRecData(:,5),'b',t,MatRecData(:,6),'r')
 grid on
-title('IID output')
+title('Gain output')
 subplot(4,1,4)
 plot(t,MatRecData(:,7),'b',t,MatRecData(:,8),'r')
 grid on
-title('HRTF output')
+title('Fx output')
 
 
 figure()
 plot(MatRecDataFil(:,1),'b')
 hold on
-plot(MatRecDataFil(:,1),'r')
+plot(MatRecDataFil(:,2),'r')
 grid on
 title('HRTF Filter taps')
+xlabel('Samples')
+ylabel('Amplitude in gg')
 ylim([-1 2])
+legend('Left ear','Right ear')
 
 function PosX_Callback(hObject, eventdata, handles)
 % hObject    handle to PosXBox (see GCBO)
@@ -597,5 +700,8 @@ function PosZ_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+%% Make graph
+% clc
+% AlgoFlexClient(handles.serverID,'GenerateGraph',{},{},'Audio+Parms',50,'png','C:\tmp\3DAUTE')
 
 
