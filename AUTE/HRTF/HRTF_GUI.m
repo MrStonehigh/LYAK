@@ -66,9 +66,9 @@ handles.output = hObject;
 handles.serverID = 0;
 handles.fs = 48000; 
 handles.rectime = 10;
-handles.sampno = 0;
-handles.playbackFile = importdata('HRTF\Testing.mat');
-%handles.playbackFile = importdata('HRTF\10secBeat.mat');
+handles.sampno = 30;
+%handles.playbackFile = importdata('HRTF\Testing.mat');
+handles.playbackFile = importdata('HRTF\10secBeat.mat');
 %handles.playbackFile = importdata('HRTF\S400.mat');
 %handles.playbackFile = handles.playbackFile2.playdata 
 handles.PosX = 1;
@@ -404,8 +404,16 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idMatPlayer,'PlaybackMode','re
 
 
 
+[idChanCombL nameChanCombL] = AlgoFlexClient(handles.serverID,'Create','ChannelCombiner',2,1);
+AlgoFlexClient(handles.serverID,'Help','ChannelCombiner')
+AlgoFlexClient(handles.serverID,'SetData',idChanCombL,'Function','MeanActive');
 
-handles.rectime=10;      %Recording time for MatrixRecorder in sec
+[idChanCombR nameChanCombR] = AlgoFlexClient(handles.serverID,'Create','ChannelCombiner',2,1);
+AlgoFlexClient(handles.serverID,'Help','ChannelCombiner')
+AlgoFlexClient(handles.serverID,'SetData',idChanCombR,'Function','MeanActive');
+
+
+handles.rectime=30;      %Recording time for MatrixRecorder in sec
 handles.sampno=handles.fs*handles.rectime;
 [handles.idMatRec handles.nameMatRec] = AlgoFlexClient(handles.serverID,'Create','MatrixRecorder',8,0);
 AlgoFlexClient(handles.serverID,'Help','MatrixRecorder')
@@ -433,17 +441,17 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idGainR,'GLD_GainFactor',{'Lin
 AlgoFlexClient(handles.serverID,'Help','AudioStream');
 AlgoFlexClient(handles.serverID,'GetData',idAudioOut,'RawCapabilities')
 AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'Device','Primary Sound Driver');
-AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'BufferSize',1024);
+AlgoFlexClient(handles.serverID,'SetData',idAudioOut,'BufferSize',4096);
 
 % ::::::::: UMIK Audiostream IN:::::::::::::::::
-% [idAudioIn nameAudioIn]=AlgoFlexClient(handles.serverID,'Create','AudioStream',0,2);
-% AlgoFlexClient(handles.serverID,'Help','AudioStream')
-% AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
-% %AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
-% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Microphone (Umik-1  Gain: 18dB  )');
-% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',3072);
-% % AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardInputs',[2 1]);
-% % AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardOutputs',[2 1]);
+[idAudioIn nameAudioIn]=AlgoFlexClient(handles.serverID,'Create','AudioStream',0,2);
+AlgoFlexClient(handles.serverID,'Help','AudioStream');
+AlgoFlexClient(handles.serverID,'GetData',idAudioIn,'Capabilities');
+%AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Primary Sound Capture Driver');
+AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'Device','Microphone (Umik-1  Gain: 18dB  )');
+AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'BufferSize',4096);
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardInputs',[2 1]);
+% AlgoFlexClient(handles.serverID,'SetData',idAudioIn,'CardOutputs',[2 1]);
 % ::::::::: UMIK Audiostream IN:::::::::::::::::
 
 % AlgoFlexClient(handles.serverID,'Help','FFT');
@@ -510,14 +518,17 @@ AlgoFlexClient(handles.serverID,'SetData',handles.idDelayR,'DelayTime',handles.T
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 1,handles.idDelayL,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',idFilePlay, 2,handles.idDelayR,1);
 % :::::::: UMIK MIC ::::::::::
-% AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 1,handles.idDelayL,1);
-% AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 2,handles.idDelayR,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 1,idChanCombL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idAudioIn, 2,idChanCombR,1);
 % :::::::: UMIK MIC ::::::::::
 
 % :::::::: ORIGINAL ::::::::::
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 1,handles.idDelayL,1);
-AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 2,handles.idDelayR,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 1,idChanCombL,2);
+AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idMatPlayer, 2,idChanCombR,2);
 % :::::::: ORIGINAL ::::::::::
+
+AlgoFlexClient(handles.serverID,'ConnectAudio',idChanCombL, 1,handles.idDelayL,1);
+AlgoFlexClient(handles.serverID,'ConnectAudio',idChanCombR, 1,handles.idDelayR,1);
 
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayL, 1,idAudioOut,1);
 % AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idDelayR, 1,idAudioOut,2);
@@ -548,7 +559,7 @@ AlgoFlexClient(handles.serverID,'ConnectAudio',handles.idConvR,2,handles.idMatRe
 
 
 % :::: Set Exe sequence ::::::
-AlgoFlexClient(handles.serverID,'SetExeSeq',[handles.idMatRec handles.idMatRecFil handles.idMatPlayer handles.idDelayL handles.idDelayR handles.idGainL handles.idGainR handles.idConvL handles.idConvR idAudioOut]);
+AlgoFlexClient(handles.serverID,'SetExeSeq',[handles.idMatRec handles.idMatRecFil idAudioIn handles.idMatPlayer idChanCombL idChanCombR handles.idDelayL handles.idDelayR handles.idGainL handles.idGainR handles.idConvL handles.idConvR idAudioOut]);
 
 
 % :::: start ::::::::

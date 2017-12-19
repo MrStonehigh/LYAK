@@ -1,0 +1,83 @@
+close all
+
+fs=48000;
+Lyd = [MatRecData(:,7) MatRecData(:,8)];
+sound(Lyd,fs)
+
+audiowrite('Reference.wav',Lyd,fs)
+
+%%
+close all
+A = [1 0 0;
+    0 1 0;
+    0 -2 0;
+    -1 0 0;
+    -1 0 -0.7;
+    1 0 0.7;
+    1.5 2.8 0;
+    -0.2 -0.4 -0.1;
+    1.1 0.1 -0.4;
+    0 0 2;
+    -7 7 0]
+
+figure()
+plot3(0,0,0,'r o')
+hold on
+plot3(A(:,1),A(:,2),A(:,3),'b o')
+grid on
+
+%% MERGE
+
+Ref = audioread('Reference.wav');
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S1' Ref' S1' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test1,fs);
+
+S1 = audioread('Signal1.wav');
+Test1 = [Ref' S8' Ref' S8' Ref'];
+%sound(Test1,fs)
+audiowrite('Test1.wav',Test8,fs);
+
+S9 = audioread('Signal9.wav');
+Test1 = [Ref' S9' Ref' S9' Ref'];
+%sound(Test1,fs)
+audiowrite('Test9.wav',Test1,fs);
+
+S10 = audioread('Signal10.wav');
+Test10 = [Ref' S10' Ref' S10' Ref'];
+%sound(Test1,fs)
+audiowrite('Test10.wav',Test1,fs);
+
+%%
+plot(Ref)
