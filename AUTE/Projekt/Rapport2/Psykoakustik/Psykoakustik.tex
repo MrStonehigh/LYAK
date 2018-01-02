@@ -72,12 +72,30 @@ I den virkelige verden hviler øret dog ikke alene på disse to cues, men basere
 
 Da både ITD og ILD er frekvens-uafhængige elementer for sig selv, er der et behov for flere informationer for en nøjagtigt lokalisering af en lydkilde. Denne kommer fra hjernens genkendelse af positioner ud fra frekvenskarakteristiker, formet af det ydre øre, pinnaen's, udformning. 
 
-Netop reflektioner og diffraktioner, som gives 
+Netop reflektioner og diffraktioner, som skabes af torso, hoved og særligt pinnaen, giver nogle særlige dyk og peaks for særlige frekvenser. Igennem de mange år man har benyttet sine ører, har hjernen lært at kategorisere disse særlige kendetegn for diverse frekvenskarakteristikker under specifikke positioner, i særligt det vertikale plan, kaldet elevation.	
 
-Head Related Transfer Function (HRTF) er betegnelsen for den overføringsfunktion, som IID og det ydre øres udformning udgør. 
+Head Related Transfer Function (HRTF) er betegnelsen for denne overføringsfunktion, og udgør den påvirkning som lyden undergår i sin vej fra lydkilden til ørets indgang. Problematikken i HRTF'er består derfor også i den individuelle udformning af Pinnaen hos mennesker. Alle mennesker vil altså opleve lyden med mindre afvigelser i frekvenskarakteristikken, og der er derfor ikke to HRTF-sæt der vil være helt ens. 
 
+For at kunne opnå perfekt 3D-lyd i et par høretelefoner vil der altså være brug for et sæt individuelle HRTF'er for den pågældende testperson, for at personen skulle opleve den konstruerede binaurale lyd som værende ægte. Af samme årsag, vil et generaliseret sæt HRTF'er kunne opleves meget forskelligt under tests. 
 
-\subsection{HRTF i Praksis}
+\subsection{HRTF i Teorien}
+Som tidligere nævnt, udgør en HRTF den påvirkning af et lydsignal som foregår fra lydkilde til lytter. \\
+Ved betragtning af lyden i tidsdomænet, bliver HRTF'en til en impulsrespons kalden Head Related Impulse Response (HRIR), som for hvert øres HRIR foldes med det udkommende lydsignal x(t), som det ses i figur \ref{fig:HRTFfoldning}. Dette resulterer i det endelige, spatiale lydsignal $X_L(t)$ og $X_R(t)$.
+
+\figur{.5}{HRTFfoldning}{Foldning af lyden med HRIR}{HRTFfoldning}
+
+Foldningen kan betragtes som i ligning \ref{eq:HRIR}:
+\begin{equation}\label{eq:HRIR}
+	X_{L/R}(t)=h_{L/R}*x(t)
+	\end{equation}
+	
+	Ved at Fourier-transformere ligningen, opnås der istedet for en foldning, en multiplikation imellem HRIR og lydsignalet, som muliggør en simpel isolering, som det fremgår af ligning \ref{eq:HRTF}:
+	\begin{equation}\label{eq:HRTF}
+		X_{L/R}(n)=H_{L/R}(n)\cdot X(n) \implies \frac{X_{L/R}(n)}{X(n)}=H_{L/R}(n)
+	\end{equation}
+	, hvilket indikerer, at såfremt man dividerer det målte signal i lytterpositionen med det afsendte, i frekvens-domæmenet, vil man have en isoleret overføringsfunktion. 
+	
+	\subsection{HRTF i Praksis}
 Mange forskerhold har gennem årene arbejdet med at optage og genskabe HRTF'er for mange forskellige azimuth- og elevation-punkter, ved at måle og optage den impulsrespons som øret oplever, når impulsen opstår i en given azimuth og elevation. Nogle af disse databaser af HRTF'er er blevet standardiseret og samlet under ét, kaldet SOFA (Spatially Oriented Format for Acoustics) \cite{SOFA}. 
 
 Til dette projekt er anvendt databasen fra MIT \cite{MIT} som med 710 målepunkter, dækker elevation fra -40$^\circ$ til 90$^\circ$ i en komplet 360$^\circ$ azimuth i en distance på 1 meter fra en KEMAR som det er vist på figur \ref{fig:mit}.
