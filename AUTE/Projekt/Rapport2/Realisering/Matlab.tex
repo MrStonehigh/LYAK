@@ -10,7 +10,7 @@ Til dette projekt benyttes Matlab som regnemaskine og AlgoFlex som realtidsscrip
 \end{figure}
 
 
-Lydinputtet skal være et stereosignal (eller et monosignal delt på 2 kanaler), som igennem hele 3D-rutinen modelleres hver for sig, inden de bliver afspillet i hver deres side af høretelefonerne. I scriptet er der udover et lydinput og -output, 3 modelleringer af lyden, afhængig af den ønskede azimuth, elevation og distance. \fxnote{Modellering hvordan? AB}
+Lydinputtet skal være et stereosignal (eller et monosignal delt på 2 kanaler), som igennem hele 3D-rutinen modelleres hver for sig, inden de bliver afspillet i hver deres side af høretelefonerne. I scriptet er der udover et lydinput og -output, 3 modelleringer af lyden, afhængig af den ønskede azimuth, elevation og distance. 
 
 \subsection{Delay}
 
@@ -29,7 +29,7 @@ Udregner man forskellen i tid får man \( Diff_{Time} = \frac{Diff_{Dist}}{344\f
 
 \subsection{Distance gain}
 
-Distancen modelleres som nævnt ved hjælp af distancereglen, hvor der skrues 6dB op for hver halvering af distancen, og ligeledes dæmpes med 6dB når distancen fordobles. Dette udregnes ud fra lydkildens startposition, som er 1 meter foran lyttepositionen.
+Distancen modelleres som nævnt ved hjælp af afstandsreglen, hvor der skrues 6dB op for hver halvering af distancen, og ligeledes dæmpes med 6dB når distancen fordobles. Dette udregnes ud fra lydkildens startposition, som er 1 meter foran lyttepositionen.
 
 \subsection{HRTF}
 

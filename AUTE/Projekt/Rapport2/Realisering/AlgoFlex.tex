@@ -1,11 +1,12 @@
 \section{AlgoFlex}
 \label{sec:AlgoFlex}
 
-AlgoFlex er et realtidsscript udviklet hos MUS!C GROUP ved TC Electronic til intern test af realtidsopstillinger. Det er et server-baseret script, hvor man kan indsætte forskellige blokke og forbinde dem som man ønsker til eksekvering i bl.a. Matlab. Det er også muligt at oprette sine egne blokke, hvilket bl.a. er gjort med Fx, blokken\fxnote{Navngiv som Convolution blok, AB} som er en simpel foldningsblok. Resten af blokkene anvendt i dette projekt er standardblokke fra AlgoFlex-biblioteket.
+AlgoFlex er et realtidsscript udviklet hos MUS!C GROUP ved TC Electronic til intern test af realtidsopstillinger. Det er et server-baseret script, hvor man kan indsætte forskellige blokke og forbinde dem som man ønsker til eksekvering i bl.a. Matlab. Det er også muligt at oprette sine egne blokke, hvilket bl.a. er gjort med en simpel foldningsblok, som i dette projekt er benævnt Fx.%, blokken\fxnote{Navngiv som Convolution blok, AB} som er en simpel foldningsblok. 
+Resten af blokkene anvendt i dette projekt er standardblokke fra AlgoFlex-biblioteket.
 
 \figur{.9}{3DAUTE}{Blokdiagram over projektets AlgoFlex-blokke}{3DAUTE}
 
-På figur \ref{fig:3DAUTE}\fxnote{Lav simpelt blokdiagram over algoflexblokkene LS}\fxfatal{eller brug tid på at lave pænere AlgoFlexDiagram! LS} ses opbygningen af AlgoFlex-blokkene. 
+På figur \ref{fig:3DAUTE} ses opbygningen af AlgoFlex-blokkene, samt de interne signalveje mellem blokkene. Det ses at stereosignalet fra MatrixPlayeren deles igennem hele rutinen, hvorved signalet for hhv højre og venstre øre, modelleres hver for sig, inden de samles i AudioStreamblokken til afspilning. 
 
 \subsection{Blokbeskrivelse}
 
@@ -14,7 +15,7 @@ På figur \ref{fig:3DAUTE}\fxnote{Lav simpelt blokdiagram over algoflexblokkene 
 	\item[\textbf{Delay}] Blokken som modtager det beregnede tidsdelay for hvert øre som parameter, og derfra forsinker signalet som ønsket.
 	\item [\textbf{Gain}] Når distancen er udregnet, udregnes det ønskede gain ud fra afstandsreglen, som sættes som Gain-blokkens parameter. 
 	%	\item[\textbf{AEC}] Acoustic Echo Cancelation. Teknik til at bortfiltrere et akustisk ekko. \fxnote{lidt bedre forklaring - Bør vi ikke slette den? Vi bruger det ikke som sådan længere, AB}
-	\item[\textbf{Fx}] \fxnote{Navngiv Convolution, AB}En selvkodet blok som foretager en foldning af inputsignalet og de filterkoefficienter fra HRTF'erne der gives som parametre. 
+	\item[\textbf{Fx}] En selvkodet blok som foretager en foldning af inputsignalet og de filterkoefficienter fra HRTF'erne der gives som parametre. 
 	
 	\item[\textbf{AudioStream}] Output blokken som sender signalet ud i hhv venstre og højre kanal vha PC'ens normale lydkort. 
 	\item[\textbf{MatrixRecorder}] To MatrixRecordere benyttes til at opsamle data løbende fra blokkene, og er blandt andet benyttet både til debugging, og til plottene på figur \ref{fig:blok_output}.
