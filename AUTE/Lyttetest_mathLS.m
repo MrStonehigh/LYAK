@@ -20,7 +20,7 @@ A2 = [0 0 1;
     60 10 3;
     240 -10 0.5;
     5 -20 1.1;
-    0 0 2;
+    0 90 2;
     135 0 9.8];
 
 azimeandiff = zeros(1,10);
@@ -112,7 +112,7 @@ zlabel('Z');
 plot3(A(2,1),A(2,2),A(2,3),'b o','Markersize',10)
 grid on
 plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
-legend('Listener position','Testsignal','Answers')
+legend('Listener position','Testsignal','Answers','Location','NorthEast')
 
 %% Test 2
 %close all
@@ -616,7 +616,7 @@ zlabel('Z');
 plot3(A(j,1),A(j,2),A(j,3),'b o','Markersize',10)
 grid on
 plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
-legend('Listener position','Testsignal','Answers')
+legend('Listener position','Testsignal','Answers','Location','NorthEast')
 
 %% Test 9
 %close all
@@ -629,7 +629,7 @@ T1 = [-5 0 0;
     -1.4 1.4 0;
     5.6 0 2.1;
     -6.6 0 -2.4;
-    270 0 1];
+    0 -1 0];
 
 
 T2 = [180 0 5;
@@ -800,3 +800,118 @@ ylabel('Difference')
 [azimaks aziindma] = max(abs(azimeandiff))
 [elemaks eleindma] = max(abs(elemeandiff))
 [dismaks disindma] = max(abs(dismeandiff))
+
+%% All plots
+
+T1 = [0.3 0.3 0.4;
+    0 1 0;
+    0 1 0;
+    0 0.5 0;
+    0 1.9 0.7;
+    0.4 0.6 0.7;
+    0 0.4 0.4;
+    0 1 0;
+    0 0.5 0];
+T2 = [0 -10 0;
+    0 0.5 0;
+    -5.8 -5.8 -5.7;
+    -4.3 -4.3 -3.5;
+    -0.4 -0.8 -0.5;
+    -1.3 -3.5 -1.4;
+    0 -7.1 7.1;
+    0.9 -1.5 4.7;
+    0 -0.4 0.4];
+T3 = [1 0 0;
+    0.5 0.5 0.7;
+    1 0 0;
+    1 0 0;
+    1 0 0;
+    0 0 1;
+    1 0 0;
+    1 0 0;
+    0 0 5];
+T4 = [0.7 0 0.7;
+    0.4 0 0.4;
+    1 0 0;
+    -1 0 0;
+    4 0 0.3;
+    0.6 -.4 .7;
+    1 0 0;
+    1 0 0;
+    0 0 5];
+T5 = [-.7 0 .7;
+    1.9 0 -1.6;
+    1 0 0;
+    2.5 -1.4 0.8;
+    2.6 1.5 0.5;
+    -0.5 -0.5 0.7;
+    0.5 0 0;
+    -1.7 0 4.7;
+    0 0 5];
+T6 = [-3.2 1.5 3.5;
+    0 7.1 7.1;
+    0 5 0;
+    0 7.7 -6.4;
+    0 8 0;
+    -1.5 1.5 -1.3;
+    0 10 0;
+    -1.6 9.3 -3.4;
+    0 5 0];
+T7 = [0 -.4 .4;
+    0 -5 0;
+    -2.7 -2.7 -3.2;
+    0.9 -4.9 0;
+    -0.3 -0.4 0;
+    -0.3 -0.4 0;
+    0.1 -0.4 0.3;
+    0 -0.9 0.3;
+    0 0 5];
+T8 = [5 0 0;
+    5 0 0;
+    -2.9 2.9 -2.9;
+    -1.3 1.3 -.7;
+    0.8 1.4 1.1;
+    0 0 1;
+    1 0 0;
+    4.9 0 0.9;
+    0 0 5]; 
+T9 = [-5 0 0;
+    7.7 0 -6.4;
+    0 -10 0;
+    -4.4 1.6 -1.7;
+    3.1 -3.1 -2.5;
+    -1.4 1.4 0;
+    5.6 0 2.1;
+    -6.6 0 -2.4;
+    0 -1 0]; 
+T10 = [10 0 0;
+    0 -9.8 1.7;
+    -5.4 5.4 -6.4;
+    -7.2 2.6 -6.4;
+    3.8 6.6 -6.4;
+    -5.3 5.3 -2.7;
+    -1.5 8.5 5;
+    2.8 2 9.4;
+    0.9 4.9 0];
+
+
+figure()
+plot3(0,0,0,'r o','Markersize',10)
+title('All testplots')
+hold on
+xlabel('X');
+ylabel('Y');
+zlabel('Z');
+plot3(A(:,1),A(:,2),A(:,3),'b o','Markersize',10)
+grid on
+plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
+plot3(T2(:,1),T2(:,2),T2(:,3),'g o')
+plot3(T3(:,1),T3(:,2),T3(:,3),'g o')
+plot3(T4(:,1),T4(:,2),T4(:,3),'g o')
+plot3(T5(:,1),T5(:,2),T5(:,3),'g o')
+plot3(T6(:,1),T6(:,2),T6(:,3),'g o')
+plot3(T7(:,1),T7(:,2),T7(:,3),'g o')
+plot3(T8(:,1),T8(:,2),T8(:,3),'g o')
+plot3(T9(:,1),T9(:,2),T9(:,3),'g o')
+plot3(T10(:,1),T10(:,2),T10(:,3),'g o')
+legend('Listener position','Testsignals','Answers','Location','NorthEast')

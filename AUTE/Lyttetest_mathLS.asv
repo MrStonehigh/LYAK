@@ -794,5 +794,35 @@ xlabel('Test no.')
 ylabel('Difference')
 
 [azimin aziind] = min(abs(azimeandiff))
-[elemin ind] = min(abs(azimeandiff))
-[dismin ind] = min(abs(azimeandiff))
+[elemin eleind] = min(abs(elemeandiff))
+[dismin disind] = min(abs(dismeandiff))
+
+[azimaks aziindma] = max(abs(azimeandiff))
+[elemaks eleindma] = max(abs(elemeandiff))
+[dismaks disindma] = max(abs(dismeandiff))
+
+%% All plots
+
+T1 =
+T2 =
+T3 =
+T4 =
+T5 =
+T6 =
+T7 =
+T8 = 
+T9 = 
+T10 = 
+
+
+figure()
+plot3(0,0,0,'r o','Markersize',10)
+title('All testplots')
+hold on
+xlabel('X');
+ylabel('Y');
+zlabel('Z');
+plot3(A(:,1),A(:,2),A(:,3),'b o','Markersize',10)
+grid on
+plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
+legend('Listener position','Testsignal','Answers')
