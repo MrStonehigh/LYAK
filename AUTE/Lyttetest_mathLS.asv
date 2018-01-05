@@ -803,7 +803,7 @@ plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
 legend('Listener position','Testsignal','Answers')
 
 %%
-close all
+%close all
 
 figure()
 bar([abs(azimeandiff') abs(elemeandiff') abs(dismeandiff')])
@@ -840,27 +840,27 @@ ylabel('Difference')
 
 figure()
 subplot(3,1,1)
-b1=bar(abs(azistddiff'),'b' )
+b1=bar(abs(azimeandiff'),'b' )
 grid on
-title('Azimuth spredning')
+title('Azimuth differences')
 xlabel('Test no.')
-ylabel('Spredning')
+ylabel('Difference')
 %b1(1).LineWidth = 2;
 %b1(1).EdgeColor = 'red';
 subplot(3,1,2)
-bar( abs(elestddiff'),'g' )
+bar( abs(elemeandiff'),'g' )
 grid on
-title('Elevation spredning')
+title('Elevation differences')
 xlabel('Test no.')
-ylabel('Spredning')
+ylabel('Difference')
 
 
 subplot(3,1,3)
-bar( abs(diststddiff'),'y')
+bar( abs(disstddiff'),'y')
 grid on
 title('Distance spredning')
 xlabel('Test no.')
-ylabel('Spredning')
+ylabel('Difference')
 
 [azimin aziind] = min(abs(azimeandiff))
 [elemin eleind] = min(abs(elemeandiff))
