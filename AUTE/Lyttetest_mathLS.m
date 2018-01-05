@@ -803,7 +803,7 @@ plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
 legend('Listener position','Testsignal','Answers')
 
 %%
-close all
+%close all
 
 figure()
 bar([abs(azimeandiff') abs(elemeandiff') abs(dismeandiff')])
