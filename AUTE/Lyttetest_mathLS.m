@@ -1,4 +1,4 @@
-close all, clear all, clc
+close all, clc
 A = [1 0 0;
     0 1 0;
     0 -2 0;
@@ -30,6 +30,10 @@ distmeandiff = zeros(1,10);
 azistddiff = zeros(1,10);
 elestddiff = zeros(1,10);
 diststddiff = zeros(1,10);
+
+allazi = zeros(9,10);
+allele = zeros(9,10);
+alldis = zeros(9,10);
 
 figure()
 plot3(0,0,0,'r o')
@@ -64,6 +68,10 @@ T2 = [45 45 0.5;
     90 45 0.5;
     90 0 1;
     90 0 0.5   ];
+
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 
 mu=mean(T2);
 rho = std(T2);
@@ -141,6 +149,9 @@ T2 = [270 0 10;
     300 70 5;
     270 45 0.5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[50:.01:400];
@@ -216,6 +227,9 @@ T2 = [0 0 1;
     0 0 1;
     270 90 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-200:.01:300];
@@ -291,6 +305,9 @@ T2 = [0 45 1;
     0 0 1;
     270 90 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-200:.01:400];
@@ -367,6 +384,9 @@ T2 = [180 45 1;
     180 70 5;
     270 90 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-200:.01:400];
@@ -444,6 +464,9 @@ T2 = [155 45 5;
     100 -20 10;
     90 0 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[30:.01:200];
@@ -521,6 +544,9 @@ T2 = [270 45 0.5;
     270 20 1;
     270 90 0.5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[150:.01:350];
@@ -598,6 +624,9 @@ T2 = [0 0 5;
     0 10 5;
     270 90 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-100:.01:300];
@@ -674,6 +703,9 @@ T2 = [180 0 5;
     180 -20 7;
     270 0 1];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-60:.01:360];
@@ -750,6 +782,9 @@ T2 = [0 0 10;
     35 70 10;
     80 0 5];
 
+allazi(:,j-1) = T2(:,1)
+allele(:,j-1) = T2(:,2)
+alldis(:,j-1) = T2(:,3)
 mu=mean(T2);
 rho = std(T2);
 x1=[-100:.01:250];
@@ -869,6 +904,73 @@ ylabel('Spredning')
 [azimaks aziindma] = max(abs(azimeandiff))
 [elemaks eleindma] = max(abs(elemeandiff))
 [dismaks disindma] = max(abs(dismeandiff))
+
+%%
+te1 = allazi(:,1)-A2(2,1)
+te2 = allazi(:,2)-A2(3,1)
+te3 = allazi(:,3)-A2(4,1)
+te4 = allazi(:,4)-A2(5,1)
+te5 = allazi(:,5)-A2(6,1)
+te6 = allazi(:,6)-A2(7,1)
+te7 = allazi(:,7)-A2(8,1)
+te8 = allazi(:,8)-A2(9,1)
+te9 = allazi(:,9)-A2(10,1)
+te10 = allazi(:,10)-A2(11,1)
+figure()
+boxplot([te1 te2 te3 te4 te5 te6 te7 te8 te9 te10])
+grid on
+title('Azimuth answers')
+xlabel('Test signal no.')
+ylabel('Degree azimuth')
+% % ax1=gca;
+% % ax1_pos = ax1.Position; % position of first axes
+% ax2 = axes('Position',ax1_pos,...
+%     'XAxisLocation','top',...
+%     'YAxisLocation','right',...
+%     'Color','none');
+
+te1 = allele(:,1)-A2(2,2)
+te2 = allele(:,2)-A2(3,2)
+te3 = allele(:,3)-A2(4,2)
+te4 = allele(:,4)-A2(5,2)
+te5 = allele(:,5)-A2(6,2)
+te6 = allele(:,6)-A2(7,2)
+te7 = allele(:,7)-A2(8,2)
+te8 = allele(:,8)-A2(9,2)
+te9 = allele(:,9)-A2(10,2)
+te10 = allele(:,10)-A2(11,2)
+figure()
+boxplot([te1 te2 te3 te4 te5 te6 te7 te8 te9 te10])
+grid on
+title('Elevation answers')
+xlabel('Test signal no.')
+ylabel('Degree elevation')
+
+te1 = alldis(:,1)-A2(2,3)
+te2 = alldis(:,2)-A2(3,3)
+te3 = alldis(:,3)-A2(4,3)
+te4 = alldis(:,4)-A2(5,3)
+te5 = alldis(:,5)-A2(6,3)
+te6 = alldis(:,6)-A2(7,3)
+te7 = alldis(:,7)-A2(8,3)
+te8 = alldis(:,8)-A2(9,3)
+te9 = alldis(:,9)-A2(10,3)
+te10 = alldis(:,10)-A2(11,3)
+figure()
+boxplot([te1 te2 te3 te4 te5 te6 te7 te8 te9 te10])
+grid on
+title('Distance answers')
+xlabel('Test signal no.')
+ylabel('Distance in meter')
+% hold on
+% plot([1:10],A2(2:11,1),'k o')
+
+%close all
+figure()
+boxplot(allazi)
+grid on
+hold on
+plot(2,-90,'k o')
 
 %% All plots
 
