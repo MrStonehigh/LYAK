@@ -1,0 +1,7 @@
+digraph G {
+graph[size="50,50", ratio=compress, center=1];
+concentrate=true;
+node [style=rounded]
+"MatrixPlayer_1" [shape=Mrecord, fontname="Arial", fontsize=10, style=filled, fillcolor=khaki, label="{MatrixPlayer_1|{{<pi1> 1 PlaybackMode\n[1] = 'single'|<pi2> 2 Samples [...]}|{{}|{{}}|{<o1> 1}}|{}}|ID=1, XR=1 (not in exeseq)}"]
+"MatrixRecorder_1" [shape=Mrecord, fontname="Arial", fontsize=10, style=filled, fillcolor=khaki, label="{MatrixRecorder_1|{{<pi1> 1 RecordMode\n[1] = 'single'|<pi2> 2 Samples [...]|<pi3> 3 SamplesToRecord [...]}|{{<i1> 1}|{{}}|{}}|{}}|ID=2, XR=1 (not in exeseq)}"]
+}

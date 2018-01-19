@@ -1074,7 +1074,8 @@ xlabel('X');
 ylabel('Y');
 zlabel('Z');
 plot3(A(:,1),A(:,2),A(:,3),'b o','Markersize',10)
-grid on
+grid on 
+grid minor
 plot3(T1(:,1),T1(:,2),T1(:,3),'g o')
 plot3(T2(:,1),T2(:,2),T2(:,3),'g o')
 plot3(T3(:,1),T3(:,2),T3(:,3),'g o')
